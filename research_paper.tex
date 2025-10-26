@@ -359,13 +359,13 @@ Sandbox-ul Android asigură izolarea completă a aplicațiilor:
 \end{itemize}
 
 Exemplu de structură izolare:
-\begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
-/data/data/com.example.myapp/
-    ├── databases/
-    ├── shared_prefs/
-    ├── files/
-    └── cache/
-\end{lstlisting}
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
+% /data/data/com.example.myapp/
+%     ├── databases/
+%     ├── shared_prefs/
+%     ├── files/
+%     └── cache/
+% \end{lstlisting}
 
 \subsubsection{Permisiuni}
 Sistemul de permisiuni oferă:
@@ -416,12 +416,12 @@ Verified Boot asigură integritatea sistemului de pornire:
 \end{itemize}
 
 Procesul de verificare:
-\begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
-1. Bootloader verifică semnătura kernel-ului
-2. Kernel verifică sistem de fișiere root
-3. System verifică aplicațiile sistem
-4. Aplicații verifică dependențele lor
-\end{lstlisting}
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
+% 1. Bootloader verifică semnătura kernel-ului
+% 2. Kernel verifică sistem de fișiere root
+% 3. System verifică aplicațiile sistem
+% 4. Aplicații verifică dependențele lor
+% \end{lstlisting}
 
 \subsubsection{Criptarea Datelor (FDE/FBE)}
 \textbf{Full Disk Encryption (FDE)} - Android 5.0-8.x:
@@ -674,10 +674,10 @@ printr-un task hijacking.
 \textbf{Vulnerabilitate:} CVE-2021-0316, exploitation al Android task affinity system.
 
 \textbf{Vector de atac:}
-\begin{lstlisting}[language=xml, basicstyle=\ttfamily\tiny]
-<!-- Fake bank app declares affinity la bank app reală -->
-<activity android:taskAffinity="com.real.bank.app" />
-\end{lstlisting}
+% \begin{lstlisting}[language=xml, basicstyle=\ttfamily\tiny]
+% <!-- Fake bank app declares affinity la bank app reală -->
+% <activity android:taskAffinity="com.real.bank.app" />
+% \end{lstlisting}
 
 \begin{enumerate}
     \item Atacatorul instalează app malițios cu taskAffinity matching bank app
@@ -802,21 +802,21 @@ dezvoltator aplicații, și nivel de sistem.
     \item \textbf{No plaintext storage} de credențiale sensibile
 \end{enumerate}
 
-Exemplu de cod sigur:
-\begin{lstlisting}[language=Java, basicstyle=\ttfamily\tiny]
-// Folosește Android Keystore
-KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
-ks.load(null);
+% Exemplu de cod sigur:
+% \begin{lstlisting}[language=Java, basicstyle=\ttfamily\tiny]
+% // Folosește Android Keystore
+% KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
+% ks.load(null);
 
-KeyGenerator kg = KeyGenerator.getInstance("AES", "AndroidKeyStore");
-kg.init(new KeyGenParameterSpec.Builder(alias, PURPOSE_ENCRYPT | PURPOSE_DECRYPT)
-    .setBlockModes(BLOCK_MODE_GCM)
-    .setEncryptionPaddings(ENCRYPTION_PADDING_NONE)
-    .setKeySize(256)
-    .build());
+% KeyGenerator kg = KeyGenerator.getInstance("AES", "AndroidKeyStore");
+% kg.init(new KeyGenParameterSpec.Builder(alias, PURPOSE_ENCRYPT | PURPOSE_DECRYPT)
+%     .setBlockModes(BLOCK_MODE_GCM)
+%     .setEncryptionPaddings(ENCRYPTION_PADDING_NONE)
+%     .setKeySize(256)
+%     .build());
 
-SecretKey key = kg.generateKey();
-\end{lstlisting}
+% SecretKey key = kg.generateKey();
+% \end{lstlisting}
 
 \subsubsection{Protecție IPC}
 \begin{itemize}
@@ -1014,20 +1014,20 @@ Mulțumim Universității Tehnice din Cluj-Napoca pentru suportul oferit în dez
 
 \subsection{Exemplu de Politică SELinux}
 
-\begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
-# Politica SELinux pentru aplicație third-party
-type myapp, domain;
-type myapp_exec, file_type, exec_type;
+% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
+% # Politica SELinux pentru aplicație third-party
+% type myapp, domain;
+% type myapp_exec, file_type, exec_type;
 
-# Allow myapp to run
-init_daemon_domain(myapp)
+% # Allow myapp to run
+% init_daemon_domain(myapp)
 
-# Permissions
-allow myapp myapp_exec:file { execute execute_no_trans };
+% # Permissions
+% allow myapp myapp_exec:file { execute execute_no_trans };
 
-# Network permissions
-allow myapp netd:unix_dgram_socket sendto;
-\end{lstlisting}
+% # Network permissions
+% allow myapp netd:unix_dgram_socket sendto;
+% \end{lstlisting}
 
 \section{Glosar de Termeni}
 
