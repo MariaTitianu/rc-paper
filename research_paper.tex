@@ -1,0 +1,204 @@
+\documentclass[11pt,a4paper]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage[Times New Roman]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{abstract}
+\usepackage{biblatex}
+\usepackage{csquotes}
+
+% Page margins
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=3cm,
+    bottom=3cm
+}
+
+% Bibliography
+\addbibresource{references.bib}
+
+% Metadata
+\title{Title of Your Research Paper}
+\author{Your Name\thanks{Institution Name}}
+\date{\today}
+
+% Custom commands
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}{Lemma}[section]
+\newtheorem{proof}{Proof}[section]
+
+\begin{document}
+
+% Title page
+\maketitle
+
+% Abstract
+\begin{abstract}
+This is the abstract of your research paper. It should provide a concise summary of your work, including the problem addressed, methodology, key findings, and conclusions. Aim for 150-250 words that capture the essence of your contribution.
+\paragraph{Keywords:} keyword1, keyword2, keyword3, keyword4
+\end{abstract}
+
+% Main content starts
+\section{Introduction}
+
+The introduction should set the context for your research, motivate the problem, and outline your contributions. Start with the broader context and gradually narrow down to your specific research question.
+
+\begin{itemize}
+    \item State the research problem or question
+    \item Explain the significance and motivation
+    \item Review relevant prior work
+    \item Outline your contributions
+    \item Provide an overview of the paper structure
+\end{itemize}
+
+\subsection{Background}
+
+Provide background information necessary for understanding your work. Explain key concepts, terminology, and the state of the field.
+
+\subsection{Problem Statement}
+
+Clearly articulate the problem you are addressing and why it matters.
+
+\subsection{Contributions}
+
+List your main contributions:
+\begin{enumerate}
+    \item First contribution
+    \item Second contribution
+    \item Third contribution
+\end{enumerate}
+
+% Literature Review (optional section)
+\section{Related Work}
+
+Review relevant literature and position your work within the existing body of knowledge. Compare and contrast your approach with previous work.
+
+\subsection{Previous Approaches}
+
+Discuss previous approaches to similar problems.
+
+\subsection{Differences and Novelty}
+
+Highlight how your approach differs from existing methods and what makes it novel.
+
+\section{Methodology}
+
+Describe your research methodology in detail. This section should be clear enough for others to replicate your work.
+
+\subsection{Research Design}
+
+Explain the overall design of your study or system.
+
+\subsection{Data Collection and Processing}
+
+If applicable, describe how data was collected, preprocessed, and analyzed.
+
+\subsection{Implementation}
+
+Provide technical details about implementation, tools used, and experimental setup.
+
+\section{Results}
+
+Present your findings clearly and systematically. Use tables, figures, and text to convey your results.
+
+\subsection{Quantitative Results}
+
+Here's an example of mathematical notation:
+\begin{equation}
+    E = mc^2
+    \label{eq:einstein}
+\end{equation}
+
+And here's an in-line equation: $f(x) = \int_{-\infty}^{\infty} e^{-x^2} dx$
+
+\subsection{Qualitative Analysis}
+
+Discuss qualitative observations and their implications.
+
+% Example table
+\begin{table}[h]
+    \centering
+    \begin{tabular}{|l|c|c|}
+        \hline
+        \textbf{Metric} & \textbf{Method A} & \textbf{Method B} \\
+        \hline
+        Accuracy & 85\% & 92\% \\
+        Precision & 0.87 & 0.91 \\
+        Recall & 0.83 & 0.93 \\
+        \hline
+    \end{tabular}
+    \caption{Comparison of different methods}
+    \label{tab:comparison}
+\end{table}
+
+\subsection{Visualizations}
+
+Include figures as needed:
+% \begin{figure}[h]
+%     \centering
+%     \includegraphics[width=0.8\textwidth]{figure.png}
+%     \caption{Your figure caption}
+%     \label{fig:example}
+% \end{figure}
+
+\section{Discussion}
+
+Interpret your results, discuss their implications, and address limitations.
+
+\subsection{Interpretation of Results}
+
+What do your results mean? How do they relate to your research questions?
+
+\subsection{Limitations}
+
+Acknowledge the limitations of your study:
+\begin{itemize}
+    \item What constraints exist in your methodology?
+    \item What assumptions were made?
+    \item What could not be addressed in this work?
+\end{itemize}
+
+\subsection{Future Work}
+
+Suggest directions for future research:
+\begin{itemize}
+    \item Potential improvements
+    \item Unanswered questions
+    \item Suggested experiments or extensions
+\end{itemize}
+
+\section{Conclusion}
+
+Summarize your main findings and contributions:
+\begin{itemize}
+    \item Recap the problem addressed
+    \item Highlight key results
+    \item Emphasize the significance of your contributions
+    \item Suggest practical implications or applications
+\end{itemize}
+
+Your conclusion should tie everything together and leave readers with a clear understanding of what you've accomplished and why it matters.
+
+% Acknowledgments (optional)
+\section*{Acknowledgments}
+We acknowledge [funding sources, collaborators, institutions, etc.].
+
+% Bibliography
+\printbibliography
+
+% Appendices (optional)
+\appendix
+\section{Appendix A: Additional Details}
+Additional materials, extended proofs, or supplementary information can go here.
+
+\section{Appendix B: Code or Data}
+Code listings, data tables, or other supplementary materials.
+
+\end{document}
