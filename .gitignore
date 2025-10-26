@@ -23,3 +23,5 @@
 # LaTeX build directories
 _region_.tex
 
+# Claude Code directory
+.claude/
