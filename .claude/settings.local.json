@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__sequential-thinking__sequentialthinking",
+      "Read(//home/maria/**)",
+      "mcp__tavily__tavily-search"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
