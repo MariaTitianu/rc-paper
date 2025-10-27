@@ -11,9 +11,6 @@
 *.synctex.gz
 *.toc
 
-# Generated PDFs (optional - remove if you want to track PDFs)
-*.pdf
-
 # Editor specific files
 *~
 *.swp

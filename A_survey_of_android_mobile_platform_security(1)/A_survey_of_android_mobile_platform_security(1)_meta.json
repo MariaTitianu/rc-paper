@@ -1,0 +1,844 @@
+{
+  "table_of_contents": [
+    {
+      "title": "A SURVEY OF ANDROID MOBILE PLATFORM \nSECURITY",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          100.73622024059296,
+          85.68947942554951
+        ],
+        [
+          496.7176818847656,
+          85.68947942554951
+        ],
+        [
+          496.7176818847656,
+          123.95660570263863
+        ],
+        [
+          99.57215774059296,
+          123.95660570263863
+        ]
+      ]
+    },
+    {
+      "title": "",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          301.6532905101776,
+          197.6814088821411
+        ],
+        [
+          451.48143458366394,
+          197.6814088821411
+        ],
+        [
+          451.48143458366394,
+          208.26539379358292
+        ],
+        [
+          301.6532905101776,
+          208.26539379358292
+        ]
+      ]
+    },
+    {
+      "title": "Abstract",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          56.28709155321121,
+          232.78001582622528
+        ],
+        [
+          103.61196899414062,
+          232.78001582622528
+        ],
+        [
+          103.61196899414062,
+          243.6275634765625
+        ],
+        [
+          56.28709155321121,
+          243.6275634765625
+        ]
+      ]
+    },
+    {
+      "title": "1 Introduction",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          56.210443288087845,
+          400.80636274814606
+        ],
+        [
+          133.7685546875,
+          400.80636274814606
+        ],
+        [
+          133.7685546875,
+          411.84759521484375
+        ],
+        [
+          56.210443288087845,
+          411.84759521484375
+        ]
+      ]
+    },
+    {
+      "title": "2.1 Android's Platform Architecture",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          303.3699951171875,
+          222.87483668327332
+        ],
+        [
+          479.8477783203125,
+          222.87483668327332
+        ],
+        [
+          479.8477783203125,
+          233.4433388710022
+        ],
+        [
+          303.3699951171875,
+          233.4433388710022
+        ]
+      ]
+    },
+    {
+      "title": "2.2 Security and Application Permissions \nIsolation",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          56.6500244140625,
+          124.96281963586807
+        ],
+        [
+          251.88958311080933,
+          124.96281963586807
+        ],
+        [
+          251.4811248779297,
+          147.48822021484375
+        ],
+        [
+          55.503548324108124,
+          147.48822021484375
+        ]
+      ]
+    },
+    {
+      "title": "2.3 Android Application Development",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          55.81713968515396,
+          542.3635255098343
+        ],
+        [
+          237.1479949951172,
+          542.3635255098343
+        ],
+        [
+          237.1479949951172,
+          553.3458706140518
+        ],
+        [
+          55.81713968515396,
+          553.3458706140518
+        ]
+      ]
+    },
+    {
+      "title": "3 Android Security Threats",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          301.9746084213257,
+          245.21437442302704
+        ],
+        [
+          447.0535583496094,
+          245.21437442302704
+        ],
+        [
+          447.0535583496094,
+          257.277587890625
+        ],
+        [
+          301.9746084213257,
+          257.277587890625
+        ]
+      ]
+    },
+    {
+      "title": "3.1 Vulnerability of Mobile Devices",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          302.5781319141388,
+          357.5248979330063
+        ],
+        [
+          470.5084533691406,
+          357.5248979330063
+        ],
+        [
+          470.5084533691406,
+          368.8258308172226
+        ],
+        [
+          302.5781319141388,
+          368.8258308172226
+        ]
+      ]
+    },
+    {
+      "title": "3.2 Android Jailbreak",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          302.91891717910767,
+          717.0683214664459
+        ],
+        [
+          409.35125732421875,
+          715.4237902164459
+        ],
+        [
+          409.35125732421875,
+          726.7381896972656
+        ],
+        [
+          302.91891717910767,
+          727.8928782939911
+        ]
+      ]
+    },
+    {
+      "title": "3.3 Third-Party ROM",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          55.88235354423523,
+          463.09142804145813
+        ],
+        [
+          162.35838317871094,
+          463.09142804145813
+        ],
+        [
+          162.35838317871094,
+          473.52502727508545
+        ],
+        [
+          55.88235354423523,
+          473.52502727508545
+        ]
+      ]
+    },
+    {
+      "title": "3.4 Android Malicious Code",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          55.665774792432785,
+          735.4960248470306
+        ],
+        [
+          190.89688110351562,
+          735.4960248470306
+        ],
+        [
+          190.89688110351562,
+          745.5500087738037
+        ],
+        [
+          55.665774792432785,
+          745.5500087738037
+        ]
+      ]
+    },
+    {
+      "title": "4 Android Device Attack",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          303.6102294921875,
+          416.4759581685066
+        ],
+        [
+          433.4248352050781,
+          414.8314269185066
+        ],
+        [
+          433.4248352050781,
+          425.52783203125
+        ],
+        [
+          303.25732231140137,
+          426.6529757976532
+        ]
+      ]
+    },
+    {
+      "title": "4.1 Remote and Local Attacks",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          303.43023681640625,
+          441.35920453071594
+        ],
+        [
+          446.0915353298187,
+          439.71467328071594
+        ],
+        [
+          445.9638366699219,
+          449.87847900390625
+        ],
+        [
+          302.4612567424774,
+          451.00998520851135
+        ]
+      ]
+    },
+    {
+      "title": "4.2 Privacy Information Theft",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          56.60805866122246,
+          411.4925537109375
+        ],
+        [
+          200.04695415496826,
+          411.4925537109375
+        ],
+        [
+          200.01083374023438,
+          422.6583557128906
+        ],
+        [
+          55.44399616122246,
+          422.6583557128906
+        ]
+      ]
+    },
+    {
+      "title": "4.3 Communication Hijacking",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          302.7026448249817,
+          124.81331223249435
+        ],
+        [
+          446.6966857910156,
+          124.81331223249435
+        ],
+        [
+          446.6966857910156,
+          135.93495166301727
+        ],
+        [
+          302.7026448249817,
+          135.93495166301727
+        ]
+      ]
+    },
+    {
+      "title": "4.4 Remote Control and Botnet",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          56.393575847148895,
+          125.91427943110466
+        ],
+        [
+          205.18038940429688,
+          125.91427943110466
+        ],
+        [
+          205.18038940429688,
+          136.2581441104412
+        ],
+        [
+          56.393575847148895,
+          136.2581441104412
+        ]
+      ]
+    },
+    {
+      "title": "5 Android Security and Defense",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          56.089576065540314,
+          606.0045963525772
+        ],
+        [
+          222.53599548339844,
+          606.0045963525772
+        ],
+        [
+          222.53599548339844,
+          617.3997806310654
+        ],
+        [
+          56.089576065540314,
+          617.3997806310654
+        ]
+      ]
+    },
+    {
+      "title": "5.1 Detection of Malicious Application",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          55.881971657276154,
+          706.7703779935837
+        ],
+        [
+          238.23245239257812,
+          706.7703779935837
+        ],
+        [
+          238.23245239257812,
+          717.0932644605637
+        ],
+        [
+          55.881971657276154,
+          717.0932644605637
+        ]
+      ]
+    },
+    {
+      "title": "5.2 System Reinforcement",
+      "heading_level": null,
+      "page_id": 4,
+      "polygon": [
+        [
+          303.6098937988281,
+          426.7230370044708
+        ],
+        [
+          428.3967764377594,
+          426.7230370044708
+        ],
+        [
+          428.2148742675781,
+          436.5878155231476
+        ],
+        [
+          303.15696597099304,
+          436.5878155231476
+        ]
+      ]
+    },
+    {
+      "title": "6 Conclusion",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          56.89002990722656,
+          527.1769057512283
+        ],
+        [
+          125.56803131103516,
+          525.5323745012283
+        ],
+        [
+          125.56803131103516,
+          537.1676940917969
+        ],
+        [
+          55.85535502433777,
+          538.1922739744186
+        ]
+      ]
+    },
+    {
+      "title": "Funding",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          56.07223129272461,
+          738.6281020641327
+        ],
+        [
+          102.22088623046875,
+          736.9835708141327
+        ],
+        [
+          102.22088623046875,
+          749.2740931510925
+        ],
+        [
+          56.07223129272461,
+          750.9186244010925
+        ]
+      ]
+    },
+    {
+      "title": "References",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          303.489990234375,
+          132.1784965991974
+        ],
+        [
+          361.739013671875,
+          130.5339653491974
+        ],
+        [
+          361.739013671875,
+          142.567626953125
+        ],
+        [
+          303.2575354576111,
+          144.1589629650116
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          180
+        ],
+        [
+          "Line",
+          94
+        ],
+        [
+          "Text",
+          12
+        ],
+        [
+          "SectionHeader",
+          5
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "FigureGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          201
+        ],
+        [
+          "Line",
+          114
+        ],
+        [
+          "Text",
+          11
+        ],
+        [
+          "SectionHeader",
+          5
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          213
+        ],
+        [
+          "Line",
+          111
+        ],
+        [
+          "Text",
+          10
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "FigureGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          207
+        ],
+        [
+          "Line",
+          107
+        ],
+        [
+          "TableCell",
+          24
+        ],
+        [
+          "Text",
+          9
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "Table",
+          1
+        ],
+        [
+          "TableGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          202
+        ],
+        [
+          "Line",
+          115
+        ],
+        [
+          "Text",
+          12
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "PageFooter",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          227
+        ],
+        [
+          "Line",
+          114
+        ],
+        [
+          "ListItem",
+          13
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "SectionHeader",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 6,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          291
+        ],
+        [
+          "Line",
+          122
+        ],
+        [
+          "ListItem",
+          28
+        ],
+        [
+          "Text",
+          5
+        ],
+        [
+          "ListGroup",
+          3
+        ],
+        [
+          "PageFooter",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 7,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          172
+        ],
+        [
+          "Line",
+          54
+        ],
+        [
+          "ListItem",
+          10
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "PageFooter",
+          2
+        ],
+        [
+          "ListGroup",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data\\A_survey_of_android_mobile_platform_security(1)"
+}
