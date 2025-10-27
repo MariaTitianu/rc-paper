@@ -71,8 +71,8 @@
 \title{Arhitectura de Securitate a Platformei Android: Analiza Mecanismelor de Protecție}
 
 \author{%
-    Budiul Cristian-Carol\footnote{Universitatea Tehnică din Cluj-Napoca, Facultatea de Automatică și Calculatoare}\\[0.3cm]
-    Titianu Maria\footnote{Universitatea Tehnică din Cluj-Napoca, Facultatea de Automatică și Calculatoare}\\[0.3cm]
+    Budiul Cristian-Carol\\[0.1cm]
+    Titianu Maria\\[0.3cm]
 }
 
 \date{\today}
@@ -111,894 +111,167 @@
 % ABSTRACT (ROMANIAN)
 % ================================
 \begin{abstract}
-Lucrarea prezintă o analiză comprehensivă a arhitecturii de securitate a platformei Android, 
-cu accent pe mecanismele fundamentale și extinse de protecție implementate de la versiunile 
-inițiale până la Android 15/16. Printre temele centrale abordate se numără: arhitectura 
-sistemului Android, modelul de izolare bazat pe procese și UID-uri distincte, sistemul de 
-permisiuni, mecanisme moderne precum SELinux/SEAndroid, Verified Boot, criptarea datelor, 
-și TEE. Lucrarea analizează și vulnerabilități specifice platformei, incluzând studii de 
-caz reprezentative ca Stagefright, StrandHogg, QuadRooter și BlueBorne. În final, sunt 
-prezentate măsuri de protecție la nivel de utilizator, dezvoltator și sistem, alături de 
-recomandări pentru îmbunătățiri viitoare în domeniul securității mobile.
+
 \end{abstract}
 
-\textbf{Cuvinte cheie:} Android, securitate, SELinux, permisiuni, vulnerabilități, malware
-
-% ================================
-% 1. REZUMAT (ABSTRACT IN ENGLISH)
-% ================================
-\section{Rezumat}
-
-Prezenta lucrare analizează în profunzime arhitectura de securitate a platformei Android, 
-o subsistem esențial pentru siguranța a peste 3 miliarde de dispozitive active global. 
-Scopul este de a prezenta o imagine completă a evoluției mecanismelor de protecție, de la 
-arhitectura de bază de izolare la tehnologii avansate precum SELinux, Trusted Execution 
-Environment (TEE), și Kernel Root of Trust.
-
-Conform statisticilor recente, Android domină peste 70\% din piața globală de sisteme 
-de operare mobile \cite{android_stats}. Această penetrare masivă face securitatea 
-platformei o preocupare critică pentru milioane de utilizatori care depind de dispozitivele 
-mobile pentru operațiuni financiare, comunicări sensibile, și stocare de date personale.
-
-\subsection{Motivația Lucrării}
-
-Creșterea exponențială a numărului de aplicații mobile și dependența tot mai mare de 
-dispozitivele mobile în activitățile zilnice au transformat securitatea Android într-un domeniu 
-de cercetare fundamental. Studiul prezintă valoare academică și practică prin analiza atât a 
-mecanismelor de protecție existente cât și a vulnerabilităților identificate în ecosistemul Android.
-
-\subsection{Structura Lucrării}
-
-Lucrarea este organizată în 10 secțiuni principale: după introducerea contextului și 
-obiectivelor, sunt prezentate arhitectura platformei Android și modelul de securitate, 
-urmate de analiza vulnerabilităților specifice și studii de caz reprezentative. Secțiunile 
-finale prezintă măsuri de protecție și concluzii cu privire la dezvoltările viitoare în domeniu.
+\textbf{Cuvinte cheie:}
 
 % ================================
 % 2. INTRODUCERE
 % ================================
 \section{Introducere}
 
-Android este un sistem de operare open-source bazat pe kernel Linux, dezvoltat inițial de 
-Android Inc. și achiziționat de Google în 2005 \cite{android_history}. Platforma reprezintă 
-sistemul de operare mobil cel mai utilizat la nivel global, cu o penetrare estimată la peste 
-3 miliarde de dispozitive active în 2024.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+
+At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
+
+Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur. At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
 
 \subsection{Contextul General: Creșterea Dependenței de Dispozitive Mobile}
-
-Dependența de dispozitive mobile a crescut exponențial în ultimii ani:
-\begin{itemize}
-    \item Peste 3 miliarde de utilizatori Android activi global
-    \item Peste 3.5 milioane de aplicații disponibile în Google Play Store
-    \item Triliarde de dolari procesate prin aplicații mobile în domeniul fintech
-    \item Date sensibile (financiare, medicale, personale) stocate pe dispozitive mobile
-\end{itemize}
-
-Această dependență masivă face securitatea platformei Android o preocupare critică pentru:
-\begin{enumerate}
-    \item \textbf{Utilizatori individuali} - confidențialitate și protecția datelor personale
-    \item \textbf{Organizații} - securitatea datelor corporative accesate prin dispozitive mobile
-    \item \textbf{Dezvoltatori} - implementarea unor practici de securitate corecte
-    \item \textbf{Regulatorii} - conformitate cu standardele de protecție a datelor (GDPR)
-\end{enumerate}
-
-\subsection{Importanța Securității}
-
-Securitatea platformei Android prezintă implicații critice din multiple perspective:
-\begin{itemize}
-    \item \textbf{Economică:} Prevenirea fraudelor și pierderilor financiare
-    \item \textbf{Socială:} Protecția drepturilor fundamentale (viață privată, confidențialitate)
-    \item \textbf{Politică:} Resistența la atacurile de tip cyber-espionaj
-    \item \textbf{Tehnică:} Asigurarea funcționalității corecte a aplicațiilor critice
-\end{itemize}
 
 \subsection{Obiectivele Lucrării și Motivația Alegerii Temei}
 
 \paragraph{Obiettive principale:}
-\begin{enumerate}
-    \item Analiza comprehensivă a arhitecturii de securitate Android
-    \item Identificarea și clasificarea vulnerabilităților specifice platformei
-    \item Prezentarea studii de caz reprezentative din istoria Android
-    \item Propunerea de măsuri de protecție la multiple nivele (utilizator, dezvoltator, sistem)
-    \item Evaluarea evoluției mecanismelor de securitate și direcțiilor viitoare
-\end{enumerate}
 
 \paragraph{Motivația alegerii temei:}
-Alegerea acestei teme este justificată de:
-\begin{itemize}
-    \item \textbf{Relevanță:} Android este platforma mobilă dominantă la nivel global
-    \item \textbf{Complexitate:} Arhitectura de securitate este în continuă evoluție
-    \item \textbf{Impact practic:} Cunoștințele despre securitate Android sunt esențiale pentru orice profesionist IT
-    \item \textbf{Gap de cunoaștere:} Necesitatea unei sinteze comprehensivă a mecanismelor de protecție
-\end{itemize}
 
 % ================================
 % 3. PREZENTAREA PLATFORMEI ANDROID
 % ================================
 \section{Prezentarea Platformei Android}
 
-Android este un sistem de operare bazat pe kernel Linux, optimizat pentru dispozitive mobile. 
-Arhitectura sa este structurată în multiple straturi, fiecare jucând un rol critic în 
-funcționalitatea și securitatea generală a sistemului.
-
 \subsection{Arhitectura Sistemului}
 
-Arhitectura Android este organizată în următoarele componente principale:
-
 \subsubsection{Kernel Linux}
-Stratul inferior al arhitecturii Android este kernel-ul Linux, responsabil pentru:
-\begin{itemize}
-    \item Gestionarea proceselor și scheduling-ul
-    \item Managementul resurselor hardware
-    \item Drivers pentru componente hardware
-    \item Implementarea mijloacelor fundamentale de securitate
-\end{itemize}
-
-Android utilizează kernel-uri Linux modificate (version 3.18-6.1), optimizate pentru 
-dispozitivele mobile cu focus pe eficiență energetică și performanță.
 
 \subsubsection{Biblioteci Native}
-Biblioteci native (C/C++) oferă funcționalități de nivel jos, incluzând:
-\begin{itemize}
-    \item \textbf{libc (Bionic):} Implementarea Android a bibliotecii standard C
-    \item \textbf{libm:} Funcții matematice
-    \item \textbf{OpenGL ES/EGL:} Rendering grafic 3D
-    \item \textbf{Media libraries:} Procesare audio/video
-    \item \textbf{SQLite:} Baza de date embedded
-    \item \textbf{WebKit:} Motor de rendering web
-\end{itemize}
 
 \subsubsection{Mediul de Execuție (Dalvik/ART)}
-\textbf{Dalvik Virtual Machine (DVM)} - versiuni Android < 5.0:
-\begin{itemize}
-    \item Interpretor JIT (Just-In-Time) pentru cod bytecode
-    \item Fiecare aplicație rulează în propriul proces
-    \item Instanță DVM separată per aplicație
-\end{itemize}
-
-\textbf{Android Runtime (ART)} - versiuni Android >= 5.0:
-\begin{itemize}
-    \item Compilare AOT (Ahead-Of-Time) pentru îmbunătățirea performanței
-    \item Compatibilitate retroactivă cu cod Dalvik
-    \item Optimizări de memorie și CPU superioare
-\end{itemize}
-
-Diferența fundamentală: ART compilează aplicațiile la instalare, eliminând overhead-ul 
-interpretării la runtime.
 
 \subsubsection{Framework-ul Aplicațiilor}
-Framework-ul Android oferă:
-\begin{itemize}
-    \item \textbf{Activity Manager:} Ciclul de viață al aplicațiilor
-    \item \textbf{Content Providers:} Partajarea de date între aplicații
-    \item \textbf{View System:} UI și event handling
-    \item \textbf{Package Manager:} Gestionarea aplicațiilor instalate
-    \item \textbf{Telephony Manager:} Funcții telefonie
-    \item \textbf{Location Manager:} Servicii de localizare
-    \item \textbf{Notification Manager:} Sistem de notificări
-\end{itemize}
 
 \subsubsection{Stratul de Aplicații}
-Ultimul strat conține aplicațiile utilizatorului:
-\begin{itemize}
-    \item Aplicații sistem (SMS, Telefon, Contacte, etc.)
-    \item Aplicații terțe (instalate din Play Store sau sideload)
-    \item Widget-uri și live wallpapers
-\end{itemize}
 
 \subsection{Mecanisme de Izolare}
 
-Securitatea Android este fundamentată pe principiul izolării aplicațiilor:
-
 \subsubsection{Procese Separate}
-Fiecare aplicație Android rulează în propriul proces izolat:
-\begin{enumerate}
-    \item Fiecare proces are propriul adres space de memorie
-    \item Comunicarea între procese se face prin mecanisme IPC controlate
-    \item Kill al unui proces nu afectează alte aplicații
-\end{enumerate}
 
 \subsubsection{UID Distinct pentru Fiecare Aplicație}
-Android atribuie un User ID (UID) unic fiecărei aplicații instalate:
-\begin{itemize}
-    \item UID-ul determină permisiunile de acces la resurse sistem
-    \item Sistem de fișiere Unix folosește UID pentru control acces
-    \item Aplicațiile cu același UID pot partaja date (shared UID)
-\end{itemize}
-
-Formula pentru UID: $UID = 10000 + (package\_uid \times 2)$ pentru aplicații normal, 
-unde package\_uid este un număr unic atribuit la instalare.
 
 \subsection{Sistemul de Permisiuni și Semnarea Aplicațiilor}
 
 \subsubsection{Permisiuni Android}
-Sistemul de permisiuni Android controlează accesul aplicațiilor la:
-\begin{itemize}
-    \item Resurse hardware (cameră, microfon, GPS, senzori)
-    \item Date personale (contacte, calendar, SMS)
-    \item Funcții sistem (telefonie, internet, rețea)
-    \item Alte aplicații și servicii
-\end{itemize}
-
-Categorii de permisiuni:
-\begin{enumerate}
-    \item \textbf{Normal:} Acordate automat (internet, vibrator)
-    \item \textbf{Dangerous:} Cer expliciți de aprobare de la utilizator
-    \item \textbf{Signature:} Acordate doar aplicațiilor semnate cu același certificat
-    \item \textbf{Signature/System:} Doar pentru aplicații sistem
-\end{enumerate}
 
 \subsubsection{Semnarea Aplicațiilor}
-Toate aplicațiile Android trebuie să fie semnate digital:
-\begin{itemize}
-    \item Certificat de dezvoltator (self-signed sau CA)
-    \item Virstă a certificatului influență act de actualizare
-    \item Verificare integrității la instalare și actualizare
-    \item Previne alterarea aplicațiilor malware
-\end{itemize}
-
-Procesul de verificare se bazează pe criptografie asimmetrică (RSA/DSA), unde 
-cheia privată semnează aplicația și cheia publică o verifică.
 
 % ================================
 % 4. MODELUL DE SECURITATE AL PLATFORMEI ANDROID
 % ================================
 \section{Modelul de Securitate al Platformei Android}
 
-Modelul de securitate Android a evoluat treptat dintr-un sistem simplu de izolare bazat pe 
-procese într-un ecosistem complex de mecanisme defensive multi-strat.
-
 \subsection{Mecanisme de Bază}
 
 \subsubsection{Sandboxing}
-Sandbox-ul Android asigură izolarea completă a aplicațiilor:
-\begin{itemize}
-    \item Fiecare aplicație primește directorul său în $\texttt{/data/data/<package\_name>/}$
-    \item Acces la fișiere proprii controlat prin Unix DAC (Discretionary Access Control)
-    \item Combinarea UID + Permisiuni = control granular de acces
-\end{itemize}
-
-Exemplu de structură izolare:
-% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
-% /data/data/com.example.myapp/
-%     ├── databases/
-%     ├── shared_prefs/
-%     ├── files/
-%     └── cache/
-% \end{lstlisting}
 
 \subsubsection{Permisiuni}
-Sistemul de permisiuni oferă:
-\begin{itemize}
-    \item \textbf{Declarative:} Definire în $\texttt{AndroidManifest.xml}$
-    \item \textbf{Runtime:} Verificare la executare pentru Dangerous permissions
-    \item \textbf{Context-aware:} Permisiuni pot fi acordate parțial (ex: doar o fotografie)
-\end{itemize}
-
-Evoluția de la Android 5.x la 6.0+ a introdus sistemul de permisiuni la runtime, 
-permițând utilizatorilor control granular asupra resurselor mobile.
 
 \subsubsection{Izolare de Procese și Fișiere}
-\begin{itemize}
-    \item \textbf{Separarea memoriei virtuală:} Fiecare proces are adres space independent
-    \item \textbf{Protecție la nivel de fișier:} Owner și permisiuni Unix
-    \item \textbf{Inter-process communication (IPC) controlat:} Binder, AIDL, Intent system
-\end{itemize}
 
 \subsection{Extensii Moderne}
 
 \subsubsection{SELinux / SEAndroid}
-Security-Enhanced Linux reprezintă evoluția majoră în securitatea Android, introdus 
-treptat din Android 4.3 (partial) până la Android 5.0 (full enforcement):
-
-\textbf{Politici SELinux în Android:}
-\begin{enumerate}
-    \item \textbf{Coarse-grained policies:} Definire macro-restricții per categorie de aplicații
-    \item \textbf{Fine-grained constraints:} Reguli specifice per componentă
-    \item \textbf{neverallow rules:} Previn execuțiunea de politici puternice
-\end{enumerate}
-
-Mode de operare SELinux în Android:
-\begin{itemize}
-    \item \textbf{Permissive:} Loghează încălcări fără blocare (Android 4.3-4.4)
-    \item \textbf{Enforcing:} Blochează efectiv încălcările (Android 5.0+)
-\end{itemize}
-
-Impact: SELinux previne atacuri prin limitarea capabilităților proceselor chiar și 
-dacă obțin privilegii sudo sau compromit alt mecanism de securitate.
 
 \subsubsection{Verified Boot}
-Verified Boot asigură integritatea sistemului de pornire:
-\begin{itemize}
-    \item \textbf{DM-Verity:} Verificare criptografică a blocurilor sistem de fișiere
-    \item \textbf{Chain of Trust:} Verificare secvențială (Bootloader → Kernel → System)
-    \item \textbf{Integrity checks:} Hash SHA256 a imaginilor partition
-\end{itemize}
-
-Procesul de verificare:
-% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
-% 1. Bootloader verifică semnătura kernel-ului
-% 2. Kernel verifică sistem de fișiere root
-% 3. System verifică aplicațiile sistem
-% 4. Aplicații verifică dependențele lor
-% \end{lstlisting}
 
 \subsubsection{Criptarea Datelor (FDE/FBE)}
-\textbf{Full Disk Encryption (FDE)} - Android 5.0-8.x:
-\begin{itemize}
-    \item Criptare completă a partiției de date utilizator
-    \item Descriptare la pornire de către utilizator
-    \item Cheie derivată din PIN/parolă + salt
-\end{itemize}
-
-\textbf{File-Based Encryption (FBE)} - Android 9.0+:
-\begin{itemize}
-    \item Criptare la nivel de fișier în loc de partiție
-    \item Enable "Direct Boot" (aplicații se pot porni înainte de unlock)
-    \item Categorii de chei: Device (generala), Credential (după unlock)
-\end{itemize}
-
-Îmbunătățiri FBE:
-\begin{itemize}
-    \item Boot mai rapid pentru servicii critice
-    \item Criptare granular per utilizator (multi-user support)
-    \item Criptare per-file cu chei independente
-\end{itemize}
 
 \subsubsection{Keystore \& TEE}
-Android Keystore oferă:
-\begin{itemize}
-    \item Storage sigur pentru chei criptografice
-    \item Hardware-backed keys (folosește TEE sau Hardware Security Module)
-    \item Protecție hardware împotriva decompilării/malware
-    \item API simplificat pentru operații criptografice
-\end{itemize}
-
-\textbf{Trusted Execution Environment (TEE)}:
-\begin{itemize}
-    \item Mediul izolat în hardware (separat de sistemul principal)
-    \item Folosit pentru operații critice (autentificare biometrică, payments)
-    \item Implementat prin ARM TrustZone sau Echivalent
-    \item Protecție împotriva atacurilor software și parțial hardware
-\end{itemize}
-
-\subsection{Evoluția Mecanismelor de Securitate de la Android 2.x la Android 15/16}
-
-Tabel~\ref{tab:security_evolution} prezintă evoluția mecanicilor de securitate:
-
-\begin{table}[h]
-    \centering
-    \caption{Evoluția mecanismelor de securitate Android}
-    \label{tab:security_evolution}
-    \begin{tabular}{llp{6cm}}
-        \toprule
-        \textbf{Versiune} & \textbf{An} & \textbf{Mecanisme de Securitate} \\
-        \midrule
-        Android 2.x & 2009-2011 & UID, Sandboxing, Permisiuni, Semnare aplicații \\
-        Android 4.3 & 2013 & SELinux introdus (permissive mode) \\
-        Android 5.0 & 2014 & SELinux enforcing, ART, FDE, Enhanced permissions \\
-        Android 6.0 & 2015 & Runtime permissions, Doze mode \\
-        Android 7.0 & 2016 & Seccomp sandboxing \\
-        Android 8.0 & 2017 & Project Treble, Network Security Config \\
-        Android 9.0 & 2018 & FBE, Biometric API, Keystore v2 \\
-        Android 10 & 2019 & Scoped Storage, Protected Confirmation \\
-        Android 11 & 2020 & Partitioned storage, One-time permissions \\
-        Android 12 & 2021 & Privatizare MA, Approximate location \\
-        Android 13 & 2022 & Runtime permissions fine-grained \\
-        Android 14 & 2023 & Partial photo access, Notification runtime \\
-        Android 15/16 & 2024-2025 & Enhanced AI security, Hardware-backed keys \\
-        \bottomrule
-    \end{tabular}
-\end{table}
-
-\textbf{Principii de Evoluție:}
-\begin{enumerate}
-    \item \textbf{Graniţă împingere} de la user space către kernel
-    \item \textbf{Tot Mai Granular Control} asupra resurselor
-    \item \textbf{Defense in Depth} prin mecanisme multiple suprapuse
-    \item \textbf{Privacy by Design} în fiecare componentă nouă
-\end{enumerate}
 
 % ================================
 % 5. VULNERABILITĂȚI ȘI AMENINȚĂRI SPECIFICE
 % ================================
 \section{Vulnerabilități și Amenințări Specifice}
 
-Platforma Android, deși beneficiază de mecanisme avansate de securitate, prezintă 
-vulnerabilități specifice care provin din complexitatea arhitecturii sale.
-
 \subsection{Vulnerabilități ale Sistemului și Aplicațiilor}
 
 \subsubsection{Exploatarea Privilegiilor}
-Aplicațiile Android rulează cu permisiuni limitate, însă existența de vulnerabilități 
-permite escaladarea privilegiilor:
-\begin{itemize}
-    \item \textbf{Root exploits:} Obținerea accesului root prin vulnerabilități kernel
-    \item \textbf{UID confusion:} Ex plotarea incorrectă a unui UID per pachet
-    \item \textbf{Shared UID abuse:} Aplicații multiple cu același UID care împart resurse
-\end{itemize}
-
-\textbf{CWE-250: Execution with Unnecessary Privileges} - Unul din TOP 25 vulnerabilități 
-pentru Android, când aplicații primesc permisiuni excesive.
 
 \subsubsection{Vulnerabilități Kernel/Driver}
-Kernel-ul și driver-ele reprezintă stratul cel mai critic pentru securitate:
-\begin{itemize}
-    \item \textbf{CVE-2015-3842 (Mediaserver):} Stagefright exploit permite RCE prin media files
-    \item \textbf{CVE-2016-0807 (Remote code execution):} Medi a reading-urilor corrupt
-    \item \textbf{KASLR bypasses:} Randomizarea adreselor kernel de evitat în anumite versiuni
-\end{itemize}
-
-Statistici: În 2021-2023, 70\% din vulnerabilitățile Android critic (CVSS >= 7.0) 
-au fost în kernel sau drivers \cite{android_cves}.
 
 \subsection{Malware și Aplicații Malițioase}
 
 \subsubsection{DroidDream (2011)}
-\textbf{Impact:} Prima mare explodare de malware Android, cca 50,000 de aplicații infectate:
-\begin{itemize}
-    \item Propagat prin Google Play Store
-    \item Trecut verificări prin evadare de signatures
-    \item Funcționalități: RAT (Remote Access Trojan), furt date IMEI, rooted devices
-\end{itemize}
-
-\textbf{Leasons learned:} Necesitatea unui Google Play Protect și revizuire strictă de aplicații.
 
 \subsubsection{GingerMaster (2011)}
-\textbf{Caracteristici:}
-\begin{itemize}
-    \item Root exploit pentru versiuni Android 2.2-2.3
-    \item Backdoor instalat pentru control remot
-    \item Furt de date din aplicații bancare
-\end{itemize}
 
 \subsubsection{Masque Attack (2014)}
-\textbf{Modus operandi:}
-\begin{itemize}
-    \item Falsificare de aplicații (replace legitimate app)
-    \item Utilizare de nume de pachete identice ca aplicații legale
-    \item Persuadiu utilizatorul să instaleze prin "update" aparent legitim
-\end{itemize}
-
-\textbf{Protecție împotriva Masque:} Android 8.0+ verifică signature la instalare și blochează 
-aplicațiile care nu poartă signature corectă.
 
 \subsection{Riscuri legate de Root/Jailbreak și ROM-uri Terțe}
-
-Rooting/deblocare de bootloader prezintă riscuri majore:
-\begin{itemize}
-    \item \textbf{Bypass de securitate:} Disable SELinux, DM-Verity, criptare
-    \item \textbf{OS-level exploits:} Aplicarea de exploits kernel/când sistem este deblocat
-    \item \textbf{Custom ROM malware:} ROM-uri terțe pot conține backdoors
-\end{itemize}
-
-\textbf{Statistici de răspândire:} În 2023, 0.5-1\% din dispozitive Android active sunt rooted, 
-dar acest procent mic poate avea impact asupra milioane de utilizatori.
-
-\subsection{Atacuri Prin Rețea}
-
-\subsubsection{Phishing}
-\begin{itemize}
-    \item URL-uri malefice prin SMS smishing
-    \item Falsificare de interfețe (overlays)
-    \item Social engineering pentru obținerea de credențiale
-\end{itemize}
-
-\subsubsection{Wi-Fi Malicious}
-\begin{itemize}
-    \item Man-in-the-middle (MITM) prin router false
-    \item Captura de trafic necriptat
-    \item Installation de certificate false
-\end{itemize}
-
-\textbf{Protecție Android 7.0+:} Network Security Configuration permite configurarea de trust stores 
-custom pentru prevenirea imposturilor.
 
 \subsection{Pierderea Confidențialității Datelor Personale}
 
 \subsubsection{Tracking}
-\begin{itemize}
-    \item \textbf{Advertising ID:} Urmărire între aplicații pentru advertising
-    \item \textbf{Device Fingerprinting:} Identificare univocă a dispozitivului
-    \item \textbf{Cross-app tracking:} Urmărire compartimentă între aplicații
-\end{itemize}
-
-\textbf{Soluții Android 10+:}
-\begin{itemize}
-    \item Reset de Advertising ID
-    \item Scoped Storage pentru limitarea accesului la fișiere
-    \item Partial location access (approximate)
-\end{itemize}
 
 \subsubsection{Acces Neautorizat}
-\begin{itemize}
-    \item \textbf{Side channel attacks:} Extragere de informații prin timing, cache, power consumption
-    \item \textbf{Data leakage:} Export neintenționat de date sensibile (logs, caches)
-    \item \textbf{Backup abuse:} Exploatarea mecanismelor de backup pentru extragere date
-\end{itemize}
 
 % ================================
 % 6. STUDII DE CAZ - VULNERABILITĂȚI REPREZENTATIVE
 % ================================
 \section{Studii de Caz – Vulnerabilități Reprezentative}
 
-Această secțiune prezintă analize detaliate ale vulnerabilităților critice din istoria Android, 
-oferind perspective practice asupra modului în care securitatea a fost testată și îmbunătățită.
-
 \subsection{Stagefright (2015) - Atac Media}
 
-\textbf{Descriere:} Stagefright a fost o familie de vulnerabilități (codenamed "One line of code" exploit) 
-din mediul de procesare media Android.
-
-\textbf{Vulnerabilități specifice:}
-\begin{itemize}
-    \item \textbf{CVE-2015-1538:} Integer underflow în parsing MP4
-    \item \textbf{CVE-2015-1539:} Overflow în încărcare stream media
-    \item \textbf{CVE-2015-3864:} Remote code execution în libstagefright
-\end{itemize}
-
-\textbf{Vector de atac:}
-\begin{enumerate}
-    \item Atacatorul trimite MMS cu video corrupt
-    \item Dispozitivul procesează automat MMS-ul în background
-    \item Parsing corect cauzează overflow în buffer
-    \item Shellcode executat cu privilegii mediul de media
-\end{enumerate}
-
-\textbf{Impact:}
-\begin{itemize}
-    \item 950 milioane de dispozitive Android vulnerabile
-    \item Exploatare fără intervenție utilizator (zero-click exploit)
-    \item Potențial RCE pe toate versiunile Android până la 5.1
-\end{itemize}
-
-\textbf{Răspunsuri:}
-\begin{itemize}
-    \item Monthly Security Patches introduse de Google
-    \item ASLR întărit pentru Android 5.0+
-    \item Verificare mediu mai stricte în mediul de procesare
-\end{itemize}
-
-\textbf{Lecții învățate:}
-\begin{enumerate}
-    \item Parsing cod fără limite este extrem de periculos
-    \item Autoprocesarea de media preview pentru siguranță necesită verificări
-    \item Monthly patches sunt esențiale pentru securitate
-\end{enumerate}
-
-\subsection{StrandHogg (2019) - Task Hijacking}
-
-\textbf{Descriere:} StrandHogg permite atacatorilor să "oferesc" atașare la o aplicație high-value 
-printr-un task hijacking.
-
-\textbf{Vulnerabilitate:} CVE-2021-0316, exploitation al Android task affinity system.
-
-\textbf{Vector de atac:}
-% \begin{lstlisting}[language=xml, basicstyle=\ttfamily\tiny]
-% <!-- Fake bank app declares affinity la bank app reală -->
-% <activity android:taskAffinity="com.real.bank.app" />
-% \end{lstlisting}
-
-\begin{enumerate}
-    \item Atacatorul instalează app malițios cu taskAffinity matching bank app
-    \item Utilizatorul deschide bank app (real)
-    \item Utilizatorul apasă Home button
-    \item Task switcher afișează app malițioasă ca "bank app" (misleading)
-    \item Utilizatorul dă click și întroduce credențiale în app falsă
-\end{enumerate}
-
-\textbf{Impact:}
-\begin{itemize}
-    \item Millioni de usre vulnerable (până la Android 10)
-    \item Furt de credențiale bancare și financiare
-    \item Phishing efectiv fără necesitatea de decât instalare de app
-\end{itemize}
-
-\textbf{Protecții:}
-\begin{itemize}
-    \item Android 10+: Verified app name în task switcher
-    \item Google Play Protect detection pentru StrandHogg variante
-    \item User education privind verificarea app names
-\end{itemize}
-
 \subsection{QuadRooter (2016) - Vulnerabilități în Drivers}
-
-\textbf{Descriere:} QuadRooter este un set de patru zero-day vulnerabilities în Qualcomm drivers, 
-afectând 900 milion de dispozitive.
-
-\textbf{Vulnerabilități:}
-\begin{itemize}
-    \item \textbf{CVE-2016-2503:} EoP în kgsl-ioctls
-    \item \textbf{CVE-2016-2504:} IOCTL kernel memory corruption
-    \item \textbf{CVE-2016-2059:} Privilege escalation via ASHMEM
-    \item \textbf{CVE-2016-5340:} Remote code execution în Wi-Fi driver
-\end{itemize}
-
-\textbf{Implicare pentru industria Android:}
-\begin{itemize}
-    \item Demonstrează criticitatea security patches de la OEM-uri
-    \item Exponență riscul posedat de drivers closed-source
-    \item Necesitatea verificaririlor automate pentru vulnerabilități
-\end{itemize}
-
-\subsection{BlueBorne (2017) - Bluetooth Vulnerability}
-
-\textbf{Descriere:} Set de vulnerabilități care permite RCE prin Bluetooth fără pairing.
-
-\textbf{Vulnerabilități Android:}
-\begin{itemize}
-    \item \textbf{CVE-2017-0781:} Info leak în Bluetooth stack
-    \item \textbf{CVE-2017-0782:} RCE în Bluetooth network encapsulation protocol
-    \item \textbf{CVE-2017-0785:} Auth bypass în Bluetooth pairing
-\end{itemize}
-
-\textbf{Modus operandi:}
-\begin{enumerate}
-    \item Dispozitivul targeted are Bluetooth activat (fără pairing required)
-    \item Atacatorul alege dispozitivul din lista discoverable
-    \item Exploitation al vulnerabilities pentru obținerea de code execution
-    \item RCE complet cu privilegii Bluetooth daemon
-\end{enumerate}
-
-\textbf{Impact:}
-\begin{itemize}
-    \item 2 milioane + Android devices afectate
-    \item Exploitation fără interacțiune de user
-    \item Acces complet la dispozitiv dacă Bluetooth este ON
-\end{itemize}
 
 % ================================
 % 7. MĂSURI DE PROtecție ȘI SOLUȚII PROPUSE
 % ================================
 \section{Măsuri de Protecție și Soluții Propuse}
 
-Protejarea dispozitivelor Android necesită eforturi coordonate la multiple nivele: utilizator, 
-dezvoltator aplicații, și nivel de sistem.
-
 \subsection{La Nivel de Utilizator: Actualizări, Permisiuni, Igienă Digitală}
 
 \subsubsection{Actualizări}
-\begin{itemize}
-    \item \textbf{Security patches:} Instalarea promptă a update-urilor securitate
-    \item \textbf{Version management:} Folosirea de versiuni Android suportate (> 3 ani)
-    \item \textbf{GAP coverage:} De înțeles punctele când suport pentru device expiră
-\end{itemize}
-
-\textbf{Recomandări:}
-\begin{enumerate}
-    \item Check monthly pentru patch level (Settings → About phone)
-    \item Preferă dispozitive cu suport extins (Google Pixel, Samsung Enterprise)
-    \item Evită dispozitive stâng urmă (abandonate de OEM)
-\end{enumerate}
 
 \subsubsection{Permisiuni}
-\begin{itemize}
-    \item \textbf{Principiul minimului privilegiu:} Acordă doar permisiuni necesare
-    \item \textbf{Runtime permissions:} Repevoacă și re-evaluează periodic
-    \item \textbf{Permission monitor:} Folosind Privacy Dashboard (Android 12+)
-\end{itemize}
 
 \subsubsection{Igienă Digitală}
-\begin{itemize}
-    \item Instalează aplicații doar din Google Play Store sau surse sigure
-    \item Verifică review-urile înainte de instalare
-    \item Dezinstalează aplicațiile nefolosite (reduce suprafață de atac)
-    \item Evită jailbreak/rooting pentru utilizarea normală
-\end{itemize}
 
 \subsection{La Nivel de Dezvoltator: Principiul Minimului Privilegiu, Criptare, Protecție IPC}
 
 \subsubsection{Principiul Minimului Privilegiu}
-\begin{itemize}
-    \item Declară doar permisiuni necesare în AndroidManifest.xml
-    \item Verifică utilizarea efectivă de permisiuni în cod
-    \item Evită permisiuni blanket (dangerous permissions pe măsură ce se folosesc)
-\end{itemize}
 
 \subsubsection{Criptarea Datelor}
-\begin{enumerate}
-    \item \textbf{Folosește Android Keystore} pentru storage sigur de chei
-    \item \textbf{End-to-end encryption} pentru comunicații sensibile
-    \item \textbf{No plaintext storage} de credențiale sensibile
-\end{enumerate}
-
-% Exemplu de cod sigur:
-% \begin{lstlisting}[language=Java, basicstyle=\ttfamily\tiny]
-% // Folosește Android Keystore
-% KeyStore ks = KeyStore.getInstance("AndroidKeyStore");
-% ks.load(null);
-
-% KeyGenerator kg = KeyGenerator.getInstance("AES", "AndroidKeyStore");
-% kg.init(new KeyGenParameterSpec.Builder(alias, PURPOSE_ENCRYPT | PURPOSE_DECRYPT)
-%     .setBlockModes(BLOCK_MODE_GCM)
-%     .setEncryptionPaddings(ENCRYPTION_PADDING_NONE)
-%     .setKeySize(256)
-%     .build());
-
-% SecretKey key = kg.generateKey();
-% \end{lstlisting}
 
 \subsubsection{Protecție IPC}
-\begin{itemize}
-    \item \textbf{Intent validation:} Validează input în IPC (Intent, Binder, AIDL)
-    \item \textbf{Custom permissions:} Definește permission granular pentru Content Providers
-    \item \textbf{Export control:} Folosește android:exported="false" când posibil
-\end{itemize}
 
 \subsection{La Nivel de Sistem: Întărirea Kernel (SELinux), Verificarea Aplicațiilor (Google Play Protect)}
 
 \subsubsection{Întărirea Kernel}
-\begin{itemize}
-    \item \textbf{Enforcement SELinux complet:} Politici stricte pentru toate aplicațiile
-    \item \textbf{Kernel hardening:} Harden options (SYN cookies, ASLR, Stack Protection)
-    \item \textbf{Seccomp filtering:} Limitarea de system calls per aplicație
-\end{itemize}
 
 \subsubsection{Google Play Protect}
-Serviciu de securitate app-urilor:
-\begin{itemize}
-    \item \textbf{Runtime scanning:} S canopy în timp real pentru malware
-    \textbf{Verify Apps:} Verificare siguranță înainte de instalare
-    \item \textbf{Safe Browsing:} Blocarea de site-uri malicious
-\end{itemize}
-
-\textbf{Statistici 2023:}
-\begin{itemize}
-    \item 150+ milioane scan-uri zilnice
-    \item 1.7+ miliarde dezactivări de threats
-    \item 99.99\%+ dispozitive protejate
-\end{itemize}
-
-\subsection{Recomandări pentru Îmbunătățirea Securității Viitoare}
-
-\subsubsection{Securitate Bazată pe AI}
-\begin{itemize}
-    \item Machine learning pentru detection de comportament malware
-    \item Anomalie detection pentru observarea de zero-day exploits
-    \item Predictiv security patches (identificare susceptibilități înainte de exploitation)
-\end{itemize}
-
-\subsubsection{Sandboxing Hardware}
-\begin{itemize}
-    \item Hardware-enforced sandboxing (analog Chromebook ARC++)
-    \item Completely isolated environmente per app în TEE
-    \item Trusted Display pentru previnirea de UI spoofing
-\end{itemize}
-
-\subsubsection{Izolarea Datelor prin TEE (Trusted Execution Environment)}
-\begin{itemize}
-    \item Migration către TEE/secure enclaves pentru operații sensibile
-    \item Biometric authentication în TEE pentru securitate hardware-backed
-    \item Hardware-based key storage pentru applications financiale
-\end{itemize}
-
-\subsubsection{RKP (Root of Trust)}
-\begin{itemize}
-    \item Chain of trust de la bootloader către applications
-    \item Verified boot cu measurements în hardware (TPM-fără)
-    \item Remote attestation pentru verificarea integrității sistemului
-\end{itemize}
-
-\textbf{Predictivi viitoare (2025-2030):}
-\begin{itemize}
-    \item Quantum-resistant cryptography integration
-    \item Zero-trust architecture pentru dispozitive mobile
-    \item Adaptive security basat pe context și risk scoring
-\end{itemize}
 
 % ================================
 % 8. CONCLUZII
 % ================================
 \section{Concluzii}
 
-Prezenta lucrare a oferit o analiză comprehensivă a arhitecturii de securitate a platformei 
-Android, evidențiind complexitatea și evoluția continuă a mecanismelor defensive implementate 
-în ultimii 15 ani.
-
 \subsection{Sinteză a Observațiilor}
-
-\textbf{Mecanisme de securitate fundamentale:}
-\begin{enumerate}
-    \item \textbf{Sandboxing bazat pe UID} - Fundamentul arhitecturii de securitate Android
-    \item \textbf{Sistem de permisiuni granular} - Dinamic și context-aware
-    \item \textbf{SELinux enforcement} - Additio nal layer de protecție pentru toate componentelor
-    \item \textbf{Criptare FDE/FBE} - Protecție date în rest (rest)
-    \item \textbf{Verified Boot + Chain of Trust} - Siguranța procesului de boot
-\end{enumerate}
-
-\textbf{Vulnerabilități identificate:}
-\begin{itemize}
-    \item Kernel și drivers reprezintă stratul cel mai expus la atacuri
-    \item Rooting/Jailbreaking încalcă toate securitatea hardware și software
-    \item Malware-ul ia avantaj de vulnerabilități user-specific (permisiuni excesive)
-    \item Phishing și social engineering continuă să fie vectori eficienți
-\end{itemize}
-
-\textbf{Protective measures efficiency:}
-\begin{itemize}
-    \item Monthly security patches reduc cu 80-90\% expunerea la vulnerabilități cunoscute
-    \item Runtime permissions + Scoped Storage reduc tracking și data leakage cu 60\%+
-    \item Google Play Protect blochează 99.9\% malware pre-install
-    \item SELinux previne 50-70\% exploits bazate pe privilege escalation
-\end{itemize}
 
 \subsection{Previziuni: Securitate Bazată pe AI, Sandboxing Hardware, Izolarea Datelor prin TEE, RKP}
 
-Arhitectura de securitate Android va continua să evolueze către:
-
-\textbf{AI-Driven Security (2025-2026):}
-\begin{itemize}
-    \item Detection de zero-day exploits prin ML anomali detection
-    \item Adaptive security policies bazate pe behavior patterns
-    \item Predictive patches pentru vulnerabilități înainte de public disclosure
-\end{itemize}
-
-\textbf{Hardware Sandboxing:}
-\begin{itemize}
-    \item Application isolation în hardware (similar Fuchsia)
-    \item Per-app secure enclaves pentru operații critice
-    \item Hardware-backed UI rendering pentru previnere UI spoofing
-\end{itemize}
-
-\textbf{TEE Integration:}
-\begin{itemize}
-    \item Majoritatea operații sensibile migrând în TEE/secure element
-    \item Biometric processing complet în hardware
-    \item Payments și financial transactions 100\% în TEE
-\end{itemize}
-
-\textbf{Root of Trust:}
-\begin{itemize}
-    \item Chain of trust de la hardware către application level
-    \item Remote attestation standard pentru verificare enterprise
-    \item Measured boot cu cloud sync pentru assurance continuă
-\end{itemize}
-
-\textbf{Privacy Enhancements:}
-\begin{itemize}
-    \item Differential privacy pentru analytics
-    \item On-device AI processing pentru minimalizare cloud exposure
-    \item User-controlled data sharing cu granular permissions
-\end{itemize}
-
 \subsection{Final Thoughts}
-
-Securitatea Android va rămâne un domeniu dinamic, cu noi provocări emergente (IoT integration, 
-quantum computing threats, sophisticated APTs). Încorporarea de mecanisme defensive multi-strat, 
-de la software sandboxing către hardware security și AI-driven protection, va continua să fie 
-prioritatea fundamentală pentru cei 3+ miliarde de utilizatori activi.
-
-\textbf{Recomandare finală:} Pentru dezvoltatori, utilizatori, și researcheri în domeniul 
-securității mobile, înțelegerea profundă a arhitecturii Android și a vulnerabilităților sale 
-constante va constitui baza pentru construirea de aplicații și sisteme sigure în era digitală.
 
 % ================================
 % 9. BIBLIOGRAFIE
 % ================================
 \section{Bibliografie}
 
-Referințele sunt gestionate automat prin sistemul BibLaTeX. Adaugă citări în \texttt{references.bib}.
-
-\bigskip
-\noindent \textbf{Notă:} Bibliografia va fi completată cu referințe academice relevante pentru domeniul securității Android.
-
 % ================================
 % 10. CONTRIBUȚIA AUTORILOR
 % ================================
 \section*{Contribuția Autorilor}
-
-Autorul principal a fost responsabil pentru structurarea lucrării, analiza vulnerabilităților, 
-și studiile de caz prezentate în secțiunile 5-6. Autorul secundar a contribuit la descrierea 
-arhitecturii platformei (secțiunile 3-4) și la măsurile de protecție (secțiunea 7).
-
-\textbf{Declarație de confidențialitate:} Nu există conflicte de interese în redactarea acestei lucrări.
-
-% ================================
-% ACKNOWLEDGMENTS
-% ================================
-\section*{Mulțumiri}
-
-Mulțumim Universității Tehnice din Cluj-Napoca pentru suportul oferit în dezvoltarea acestei lucrări.
 
 % ================================
 % REFERENCES
@@ -1014,33 +287,6 @@ Mulțumim Universității Tehnice din Cluj-Napoca pentru suportul oferit în dez
 
 \subsection{Exemplu de Politică SELinux}
 
-% \begin{lstlisting}[language=bash, basicstyle=\ttfamily\tiny]
-% # Politica SELinux pentru aplicație third-party
-% type myapp, domain;
-% type myapp_exec, file_type, exec_type;
-
-% # Allow myapp to run
-% init_daemon_domain(myapp)
-
-% # Permissions
-% allow myapp myapp_exec:file { execute execute_no_trans };
-
-% # Network permissions
-% allow myapp netd:unix_dgram_socket sendto;
-% \end{lstlisting}
-
 \section{Glosar de Termeni}
-
-\begin{itemize}
-    \item \textbf{APT:} Advanced Persistent Threat
-    \item \textbf{Binder:} IPC framework Android
-    \item \textbf{CVE:} Common Vulnerabilities and Exposures
-    \item \textbf{FDE:} Full Disk Encryption
-    \item \textbf{FBE:} File-Based Encryption
-    \item \textbf{RCE:} Remote Code Execution
-    \item \textbf{SEAndroid:} Security-Enhanced Android (Android SELinux)
-    \item \textbf{TEE:} Trusted Execution Environment
-    \item \textbf{UID:} User Identifier
-\end{itemize}
 
 \end{document}
