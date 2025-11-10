@@ -271,6 +271,40 @@ Implementările moderne de TEE pe platformele Android utilizează tehnologii pre
 
 \subsection{Stagefright (2015) - Atac Media}
 
+\subsubsection{Vulnerabilitatea}
+
+Stagefright reprezintă o familie de vulnerabilități critice descoperite în biblioteca \texttt{libstagefright}, componenta Android responsabilă pentru procesarea fișierelor multimedia (MP4, MKV, WebM). Vulnerabilitatea tehnică constă într-un \textit{integer overflow} în procesul de parsing al metadatelor video, cauzat de lipsa validării limitelor (\textit{bounds checking}) la citirea anumitor atomi din fișierele media. Vulnerabilitatea a fost identificată de cercetătorul de securitate Joshua Drake de la compania Zimperium în iulie 2015 și prezentată la conferința Black Hat USA. Versiunile Android afectate acopereau o gamă largă: de la Android 2.2 (Froyo) până la Android 5.1.1 (Lollipop), reprezentând practic întreaga bază instalată de dispozitive Android din acea perioadă. Vulnerabilitatea primară a fost catalogată sub CVE-2015-1538, însă au fost descoperite și variante conexe (CVE-2015-1539, CVE-2015-3864) care exploatau mecanisme similare în diferite componente ale bibliotecii de procesare media.
+
+\subsubsection{Definirea Atacului}
+
+Stagefright permite un atac de tip Remote Code Execution (RCE) fără necesitatea interacțiunii utilizatorului, cunoscut în terminologia de securitate drept \textit{zero-click exploit}. Vectorul principal de atac constă în trimiterea unui mesaj MMS care conține un fișier media special construit (crafted) pentru a declanșa vulnerabilitatea. Alternativ, atacul poate fi executat prin intermediul paginilor web care încarcă fișiere media malițioase sau prin atașamente email. Complexitatea tehnică a atacului este considerată medie spre ridicată, necesitând cunoștințe aprofundate despre structura internă a fișierelor media și despre modul în care Android Media Server procesează aceste date. Un aspect critic al acestui atac este că exploatarea se execută în contextul procesului Media Server, care rulează cu privilegii extinse pentru a putea accesa hardware-ul de decodare media și alte resurse sistem necesare redării conținutului multimedia.
+
+\subsubsection{Acțiunile (Desfășurarea Atacului)}
+
+Desfășurarea atacului Stagefright urmează o secvență bine definită de pași care demonstrează sofisticarea tehnică a exploatării:
+
+\textbf{Pasul 1 - Pregătirea și Livrarea:} Atacatorul construiește un fișier media malițios cu metadata special elaborată pentru a declanșa integer overflow-ul în libstagefright și trimite acest fișier către dispozitivul țintă prin MMS, email sau link web.
+
+\textbf{Pasul 2 - Procesarea Automată:} Android Media Server detectează sosirea fișierului media și începe procesarea automată în background pentru a genera thumbnail-uri și a extrage metadata, fără a necesita deschiderea explicită a mesajului de către utilizator.
+
+\textbf{Pasul 3 - Declanșarea Vulnerabilității:} Integer overflow-ul cauzează o scriere în afara limitelor buffer-ului alocat, rezultând într-un buffer overflow care permite suprascrierea memoriei adiacente.
+
+\textbf{Pasul 4 - Execuția Codului Malițios:} Atacatorul profită de buffer overflow pentru a injecta și executa cod arbitrar în contextul procesului Media Server, obținând astfel controlul execuției.
+
+\textbf{Pasul 5 - Escaladarea Privilegiilor:} Se realizează o potențială escaladare de privilegii către nivelul system sau root prin exploatarea de vulnerabilități suplimentare în lanțul de atac.
+
+\textbf{Pasul 6 - Compromiterea Completă:} Atacatorul obține control complet asupra dispozitivului, putând accesa camera, microfonul, GPS-ul, contactele, mesajele și apelurile, precum și să instaleze malware persistent sau să exfiltreze date sensibile.
+
+Timeline-ul atacului este extrem de rapid: de la primirea MMS-ului până la compromiterea completă a dispozitivului pot trece mai puțin de 60 de secunde, totul fără nicio indicație vizibilă pentru utilizator.
+
+\subsubsection{Efectele (Impactul)}
+
+Impactul vulnerabilității Stagefright a fost masiv, afectând aproximativ 950 de milioane de dispozitive Android la nivel global, reprezentând circa 95\% din smartphone-urile Android active în 2015. Variantele ulterioare ale vulnerabilității, denumite informal Stagefright 2.0, au extins raza de acțiune la aproximativ 1 miliard de dispozitive. Compromiterea unui dispozitiv prin Stagefright oferă atacatorului acces complet și nerestricționat la toate funcțiile critice: camera foto și video, microfonul pentru înregistrări audio, GPS pentru urmărirea locației în timp real, lista de contacte, istoricul mesajelor și apelurilor. Această vulnerabilitate a permis exfiltrarea de date personale, corporative și financiare, precum și instalarea de malware persistent sub formă de rootkit-uri, spyware sau ransomware care supraviețuiesc restart-urilor. Vulnerabilitatea a fost exploatată în atacuri țintite împotriva jurnaliștilor, activiștilor pentru drepturile omului și oficialilor guvernamentali, demonstrând valoarea sa în operațiuni de spionaj cibernetic. Un aspect deosebit de îngrijorător este simplitatea vectorului de atac: un atacator necesită doar numărul de telefon al victimei pentru a executa atacul, fără alte informații sau acces fizic la dispozitiv.
+
+\subsubsection{Soluțiile (Patch-uri și Mitigări)}
+
+Răspunsul la vulnerabilitatea Stagefright a marcat un moment de cotitură în politicile de securitate Android. Google a publicat primul set de patch-uri prin Android Security Bulletin în august 2015, adresând vulnerabilitățile CVE-2015-1538 și CVE-2015-1539. Ca urmare directă a gravității Stagefright, Google a implementat un program de actualizări lunare de securitate (Monthly Security Updates), devenind astfel un standard în industria mobilă. Îmbunătățirile tehnice au inclus întărirea mecanismului ASLR (Address Space Layout Randomization) pentru a face mai dificilă exploatarea vulnerabilităților de tip memory corruption, precum și implementarea unui sandboxing mai strict al procesului Media Server în Android 7.0 și versiuni ulterioare. Android 8.0 (Oreo) a introdus o refactorizare completă a arhitecturii Media Server, separând componentele în procese distincte cu privilegii minime, reducând astfel suprafața de atac. Pentru utilizatori, singura mitigare temporară disponibilă inițial a fost dezactivarea funcției de auto-retrieve pentru mesajele MMS, o soluție incompletă care nu proteja împotriva celorlalte vectori de atac (web, email). Provocarea majoră în răspândirea patch-urilor a fost fragmentarea ecosistemului Android, unde mulți producători de dispozitive și operatori de telefonie mobilă nu au furnizat niciodată actualizări pentru modelele mai vechi, lăsând milioane de utilizatori expuși. Lecția principală din incidentul Stagefright a fost recunoașterea necesității unui sistem robust de distribuție a patch-urilor de securitate, conducând la Monthly Security Updates care au devenit astăzi un standard acceptat în întreaga industrie.
+
 \subsection{QuadRooter (2016) - Vulnerabilități în Drivers}
 
 % ================================
