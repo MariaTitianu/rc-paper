@@ -238,31 +238,69 @@ Android Keystore System oferă un container securizat pentru stocarea și gestio
 Implementările moderne de TEE pe platformele Android utilizează tehnologii precum ARM TrustZone, care partajează procesor-ul între "lumea normală" (unde rulează Android) și "lumea securizată" (unde rulează TEE-ul). Operațiile criptografice sensibile, precum generarea de chei, semnarea digitală și verificarea biometrică, sunt executate exclusiv în TEE, iar rezultatele sunt returnate sistemului principal fără a expune materialul criptografic. Această separare hardware asigură că atacurile software, indiferent de complexitatea lor, nu pot compromite direct cheile stocate în Keystore. TEE este esențial pentru funcționalități precum autentificarea biometrică securizată, plățile mobile și protecția DRM, unde compromiterea cheilor ar avea consecințe severe pentru securitate și proprietate intelectuală. O extensie recentă a acestei infrastructuri este Play Integrity API (succesor al SafetyNet din 2023-2024), care utilizează atestarea hardware pentru verificarea integrității dispozitivului în timp real, detectând modificări precum bootloader deblocat, ROM-uri personalizate sau dispozitive root-ate. Această tehnologie este utilizată intensiv de aplicațiile bancare și alte servicii sensibile, generând controverse în comunitatea utilizatorilor avansați care preferă să-și personalizeze dispozitivele prin root-area acestora.
 
 % ================================
-% 5. VULNERABILITĂȚI ȘI AMENINȚĂRI SPECIFICE
+% 4. VULNERABILITĂȚI ȘI VECTORI DE ATAC
 % ================================
-\section{Vulnerabilități și Amenințări Specifice}
+\section{Vulnerabilități și Vectori de Atac}
 
-\subsection{Vulnerabilități ale Sistemului și Aplicațiilor}
+% PARTEA I: Vulnerabilități Tehnice
 
-\subsubsection{Exploatarea Privilegiilor}
+\subsection{Vulnerabilități de Memory Corruption}
 
-\subsubsection{Vulnerabilități Kernel/Driver}
+Vulnerabilitățile de corupere a memoriei reprezintă o clasă critică de defecte în cod C/C++ nativ din Android, incluzând buffer overflows (depășiri de buffer în stack sau heap), use-after-free (utilizarea memoriei deja eliberate) și integer overflows (depășiri aritmetice care cauzează comportament nedefinit). Aceste defecte permit atacatorilor să suprascrie date critice, să execute cod arbitrar sau să escaladeze privilegii prin manipularea directă a memoriei procesului.
+
+Manifestările istorice și recente demonstrează persistența acestor vulnerabilități: Stagefright (2015, CVE-2015-1538) a exploatat un integer overflow în biblioteca libstagefright pentru procesare multimedia, permițând remote code execution prin simple MMS-uri \cite{stagefright_cve}. Recent, în 2024-2025, continuă să apară astfel de vulnerabilități: CVE-2025-48543 (use-after-free în Android Runtime) \cite{cve_2025_48543}, CVE-2024-49748 (heap buffer overflow în Bluetooth stack) \cite{cve_2024_49748}, CVE-2025-36907 (heap overflow în kernel bootloader) \cite{cve_2025_36907}, și multiple defecte în driver-ele Qualcomm (CVE-2025-21479, CVE-2025-27038) \cite{qualcomm_june_2025}. Google Project Zero a demonstrat bypass-ul Memory Tagging Extension (MTE) prin CVE-2025-0072 în Mali GPU drivers \cite{mte_bypass}, evidențiind că chiar mitigările hardware moderne pot fi eludate.
+
+Soluțiile tehnice includ Address Space Layout Randomization (ASLR) pentru randomizarea locațiilor în memorie, Data Execution Prevention (DEP) care marchează regiuni de memorie ca non-executabile, stack canaries pentru detectarea corruption-ului buffer-ului, Control Flow Integrity (CFI) care validează destinațiile call-urilor, și refactorizarea arhitecturală (media server izolat în Android 8.0+, procese separate pentru componente critice).
+
+\subsection{Vulnerabilități de Logică și Race Conditions}
+
+Vulnerabilitățile de logică și race conditions reprezintă defecte subtile care apar din secvențe de operații neatomice sau validări incomplete, incluzând Time-of-Check Time-of-Use (TOCTOU) în care starea sistemului se modifică între momentul verificării și cel al utilizării resursei, race conditions în kernel/drivers unde thread-uri multiple accesează simultan structuri de date fără sincronizare adecvată, și erori logice în validarea parametrilor care permit bypass-uri de securitate. Aceste vulnerabilități sunt dificil de detectat prin metode tradiționale de testing deoarece depind de timing precis și condițiile de cursă pot fi intermitente.
+
+Manifestările notabile includ QuadRooter (2016), o suită de patru vulnerabilități în Qualcomm KGSL graphics driver care exploatau race conditions pentru escaladarea privilegiilor pe aproximativ 900 milioane de dispozitive Android. Recent, CVE-2025-38352 (2025) a demonstrat o vulnerabilitate TOCTOU în subsistemul posix-cpu-timers din kernel-ul Linux utilizat pe Android \cite{cve_2025_38352}, permițând atacatorilor să modifice starea sistemului între verificarea permisiunilor și executarea operației. De asemenea, CVE-2024-43081 (2024) a expus o eroare logică în InstallPackageHelper.java care permitea bypass-ul restricțiilor carrier prin exploatarea unei validări incomplete în funcția installExistingPackageAsUser \cite{cve_2024_43081}.
+
+Soluțiile tehnice implică kernel hardening cu mecanisme de detecție a race conditions, Control Flow Integrity (CFI) pentru prevenirea manipulării fluxului de execuție, utilizarea operațiilor atomice și primitive de sincronizare adecvate (mutexes, spinlocks, RCU), analiza statică automată a codului pentru detecția pattern-urilor TOCTOU, și redesign arhitectural pentru eliminarea ferestrelor temporale vulnerabile prin encapsularea operațiilor în tranzacții atomice.
+
+\subsection{Vulnerabilități în Permission Model}
+
+Vulnerabilitățile în modelul de permisiuni Android reprezintă defecte care permit aplicațiilor să ocolească restricțiile de acces la resurse protejate, incluzând permission bypass (obținerea accesului fără permisiunile necesare), confused deputy attacks (exploatarea unei aplicații privilegiate pentru acțiuni neautorizate), și intent hijacking (interceptarea sau falsificarea mesajelor Intent folosite pentru comunicarea inter-componente). Aceste vulnerabilități subminează premisa fundamentală a sandbox-ului Android că aplicațiile pot accesa doar resursele pentru care au primit permisiuni explicite de la utilizator.
+
+Manifestările notabile includ atacul StrandHogg (2019), care exploata atributul taskAffinity pentru a prezenta interfețe phishing peste aplicații legitime, permițând furt de credențiale fără permisiuni speciale \cite{strandhogg}. Recent, CVE-2024-43093 (2024) a expus o vulnerabilitate de escaladare a privilegiilor în Android Framework care permitea accesul neautorizat la directoare protejate \cite{cve_2024_43093}, fiind exploatată activ în atacuri țintite. De asemenea, CVE-2025-12080 (2025) în Google Messages pentru Wear OS a permis oricărei aplicații instalate să trimită SMS-uri în numele utilizatorului prin exploatarea ACTION\_SENDTO fără verificarea permisiunilor \cite{cve_2025_12080}, demonstrând că chiar componentele Google pot prezenta confused deputy vulnerabilities.
+
+Soluțiile tehnice implică politici SELinux granulare care restricționează accesul la nivel de proces independent de permisiunile Unix, sistemul de runtime permissions din Android 6.0+ care necesită aprobarea explicită a utilizatorului la momentul utilizării, protecția componentelor exportate prin atributul android:exported="false" și verificări de permisiuni în toate entry points, validarea riguroasă a caller identity în servicii privilegiate pentru prevenirea confused deputy attacks, și App Standby Buckets care limitează capacitatea aplicațiilor background de a accesa resurse.
+
+\subsection{Vulnerabilități Criptografice}
+
+Vulnerabilitățile criptografice în Android cuprind o gamă largă de implementări defectuoase ale mecanismelor de securitate, incluzând utilizarea algoritmilor criptografici slabi sau deprecați (DES, MD5, SHA-1), erori în validarea certificatelor TLS care permit man-in-the-middle (MITM) attacks, și managementul inadecvat al cheilor criptografice prin stocarea în plaintext sau locații accesibile. Aceste vulnerabilități compromit confidențialitatea și integritatea comunicațiilor și datelor, subminând încrederea utilizatorilor în ecosistemul Android.
+
+Manifestările practice includ aplicații care acceptă orice certificat TLS prin implementări custom de TrustManager care dezactivează validarea certificatelor, permițând atacuri MITM pe rețele WiFi publice compromise \cite{insecure_tls_android}. OWASP Mobile Top 10 2024 identifică "Insecure Cryptography" ca risc persistent, evidențiind key management vulnerabilities unde cheile sunt stocate insecure sau sunt ușor ghicibile \cite{owasp_mobile_2024}. Aplicațiile frecvent ignoră certificate pinning sau îl implementează incorect, făcând bypass-ul trivial pentru atacatori cu acces la rețea. De asemenea, stocarea insecure a datelor sensibile în SharedPreferences fără criptare sau cu chei hardcodate în cod rămâne o problemă endemică în ecosistemul Android, expusă prin simple reverse engineering al APK-urilor.
+
+Soluțiile tehnice includ Android Keystore System și Trusted Execution Environment (TEE) pentru izolarea hardware a cheilor criptografice, certificate pinning implementat corect prin Network Security Configuration din Android 7.0+, migrarea la TLS 1.3 cu suite-uri criptografice moderne (AES-GCM, ChaCha20-Poly1305), utilizarea hardware-backed keys care nu pot fi extrase din dispozitiv, și adoptarea bibliotecilor criptografice validate precum Conscrypt (implementarea Google pentru TLS) în locul implementărilor personalizate vulnerabile.
+
+\subsection{Vulnerabilități de Information Disclosure}
+
+Vulnerabilitățile de dezvăluire a informațiilor reprezintă defecte care permit accesul neautorizat la date sensibile fără a necesita exploatarea completă a sistemului, incluzând memory leaks care expun conținut rezidual din memorie neinițializată, side-channel attacks care deduc informații prin analiza timpilor de execuție sau consumului de energie, și expuneri neintenționate de date prin permisiuni excesive sau mecanisme de partajare defectuoase. Aceste vulnerabilități erodează confidențialitatea utilizatorilor chiar și în absența compromiterii complete a dispozitivului, permitând profilarea, tracking și furtul de informații personale.
+
+Manifestările concrete includ aplicații care citesc SQLite databases world-readable din directoare partajate, leakage-ul Android ID și altor identificatori hardware pentru tracking persistent între aplicații, și exploatarea senzorilor dispozitivului (accelerometru, giroscop) pentru inferarea informațiilor despre activitățile utilizatorului fără permisiuni explicite. Recent, CVE-2025-21042 (2025) a fost exploatat de spyware-ul LANDFALL prin zero-click attacks pe Samsung Galaxy, permițând înregistrarea audio, tracking GPS și exfiltrarea datelor \cite{cve_2025_21042}. De asemenea, CVE-2024-29745 (2024) a expus information disclosure prin date neinițializate \cite{cve_2024_29745}, iar CVE-2024-32896 (2024) a fost exploatat activ pentru accesarea neautorizată a datelor de sistem \cite{cve_2024_32896}.
+
+Soluțiile tehnice includ File-Based Encryption (FBE) care izolează datele la nivel de fișier cu chei separate per-utilizator, Scoped Storage din Android 10+ care restricționează accesul aplicațiilor la doar propriile directoare, Privacy Dashboard din Android 12+ care oferă transparență asupra accesului la locație/cameră/microfon în ultimele 24 ore, permission auto-reset pentru aplicații nefolosite care revocă automat permisiunile după 3 luni de inactivitate, și MAC randomization pentru adresele WiFi/Bluetooth pentru prevenirea tracking-ului persistent.
+
+% PARTEA II: Vectori de Atac
 
 \subsection{Malware și Aplicații Malițioase}
 
-\subsubsection{DroidDream (2011)}
+Malware-ul Android reprezintă software malițios care exploatează vulnerabilitățile tehnice descrise anterior (4.1-4.5) pentru a compromite dispozitive și fura date, incluzând banking trojans care interceptează credențiale financiare, spyware care monitorizează activitatea utilizatorului, ransomware care criptează datele și cere răscumpărare, și adware/scamware care generează profit prin reclame intruzive sau abonamente frauduloase. Acești vectori de atac transformă vulnerabilitățile tehnice abstracte în amenințări concrete care afectează milioane de utilizatori, demonstrând importanța critică a măsurilor de securitate defensive.
 
-\subsubsection{GingerMaster (2011)}
+Manifestările istorice includ DroidDream (2011), primul malware distribuit masiv prin Google Play Store oficial care exploata exploit-urile rageagainstthecage și exploid pentru acces root, și GingerMaster (2011) care exploata vulnerabilități în procesul de instalare a aplicațiilor. Recent, amenințările au escaladat dramatic: Kaspersky raportează o creștere de 29\% în atacurile pe smartphone-uri Android în prima jumătate a 2025 comparativ cu 2024 \cite{kaspersky_android_2025}, iar Zscaler ThreatLabz documentează o explozie de 67\% în malware-ul mobil \cite{zscaler_mobile_2025}. Bitdefender a identificat sute de aplicații malițioase care au ocolit securitatea Android 13 și au fost distribuite prin Google Play Store oficial \cite{bitdefender_google_play_2025}, demonstrând că nici măcar magazinele oficiale nu garantează securitatea completă.
 
-\subsubsection{Masque Attack (2014)}
+Soluțiile tehnice includ Google Play Protect care scanează automat toate aplicațiile instalate pentru comportament malițios folosind machine learning și threat intelligence, app sandboxing care izolează fiecare aplicație în propriul proces cu resurse limitate, runtime permissions care necesită aprobarea explicită pentru acțiuni sensibile, Play Integrity API care detectează dispozitive compromise și aplicații retușate, și educația utilizatorilor privind instalarea doar din surse oficiale și verificarea permisiunilor solicitate de aplicații.
 
-\subsection{Riscuri legate de Root/Jailbreak și ROM-uri Terțe}
+\subsection{Riscuri Root/Jailbreak și ROM-uri Terțe}
 
-\subsection{Pierderea Confidențialității Datelor Personale}
+Root-area și ROM-urile custom reprezintă bypass-ul intenționat al mecanismelor de securitate Android pentru obținerea controlului complet asupra dispozitivului (UID 0 / superuser), incluzând dezactivarea Verified Boot, instalarea firmware-ului modificat, și eliminarea restricțiilor impuse de producători. Deși motivate adesea de dorința de personalizare și control, aceste practici elimină straturi fundamentale de securitate precum SELinux enforcement, sandbox-ul aplicațiilor, și protecția împotriva malware-ului, expunând dispozitivul la riscuri semnificative chiar dacă utilizatorul nu are intenții malițioase.
 
-\subsubsection{Tracking}
+Manifestările practice includ ROM-uri custom pre-rooted care conțin backdoors sau malware înglobat în firmware, imposibilitatea rulării aplicațiilor bancare și de plăți care detectează dispozitive compromise, și vulnerabilitatea sporită la exploatare deoarece aplicațiile malițioase pot cere acces root pentru privilegii nelimitate. Instrumente populare precum Magisk permit root-area sistemică și modificarea Play Integrity verificărilor, însă actualizările Google la Play Integrity API în 2024-2025 au făcut semnificativ mai dificil bypass-ul acestor verificări \cite{play_integrity_2025}, forțând utilizatorii să aleagă între personalizare și accesul la servicii critice precum Google Pay sau aplicații bancare. Comunitatea XDA Developers raportează că ROM-urile custom nu mai trec verificările Play Integrity din cauza restricțiilor îmbunătățite \cite{xda_custom_roms_2025}.
 
-\subsubsection{Acces Neautorizat}
+Soluțiile tehnice includ Play Integrity API care utilizează atestarea hardware pentru detectarea dispozitivelor root-ate, bootloader-ului deblocat sau firmware-ului modificat, Verified Boot care afișează avertismente vizibile la pornire pe dispozitive modificate, notificări persistente în Android pentru aplicații cu acces root activ, și educația utilizatorilor despre compromisurile de securitate implicate în root-area dispozitivelor, subliniind că personalizarea trebuie echilibrată cu necesarul de protecție a datelor sensibile și financiare.
 
 % ================================
 % 6. STUDII DE CAZ - VULNERABILITĂȚI REPREZENTATIVE

@@ -96,90 +96,59 @@
 
 ---
 
-### 📄 Pagini 5-6 - Cap 4: Vulnerabilități și Amenințări Specifice [1.5-2 pag]
+### 📄 Pagini 5-6 - Cap 4: Vulnerabilități și Vectori de Atac [1.5-2 pag]
 
-**🔴 FEEDBACK PROFESOR:** Vulnerabilități = definiție efectivă + manifestare + **soluții specifice punctuale**
+**🔴 RESTRUCTURAT:** TIPURI de vulnerabilități tehnice (4.1-4.5) + vectori de atac practici (4.6-4.7)
 
-**Obiectiv:** Definiții concrete, manifestări reale și măsuri de protecție punctuale per vulnerabilitate
+**Obiectiv:** Taxonomie tehnică clară, concisă (~150-180 cuvinte per subcapitol)
 
-#### 4.1 Exploatarea Privilegiilor
-**Structură:**
-- **Definiție efectivă:** Ce înseamnă exploatarea privilegiilor în Android (escaladare local privilege)
-- **Cum s-a manifestat:** Exemple concrete (Exploid, Rage Against The Cage, GingerBreak)
-- **Mecanismul tehnic:** Scurt - exploatare bugs în servicii system
-- **Soluții specifice:**
-  - SELinux enforcement (blocare escaladare chiar cu root)
-  - Kernel hardening (ASLR, DEP, stack canaries)
-  - Monthly security patches pentru vulnerabilități kernel
-  - Principle of least privilege în design aplicații sistem
-- (2-3 paragrafe, ~200 cuvinte)
+#### PARTEA I: Vulnerabilități Tehnice
 
-#### 4.2 Vulnerabilități Kernel și Driver-e
-**Structură:**
-- **Definiție efectivă:** Bugs în kernel Linux sau drivere proprietare (Qualcomm, MediaTek)
-- **Cum s-a manifestat:** WebKit engine CVEs, Qualcomm drivers (QuadRooter), GPU drivers
-- **Impact general:** Acces direct la kernel → bypass toate protecțiile Android
-- **Soluții specifice:**
-  - Vendor security review (Qualcomm, ARM)
-  - Control Flow Integrity (CFI) în kernel
-  - Driver sandboxing și izolare
-  - Verified Boot pentru detectare modificări kernel
-  - Faster patch distribution prin Project Treble
-- (2-3 paragrafe, ~200 cuvinte)
+**4.1 Vulnerabilități de Memory Corruption**
+- **Definiție:** Buffer overflow, use-after-free, integer overflow în cod C/C++
+- **Manifestare:** Stagefright (2015) - integer overflow în libstagefright, RCE prin MMS
+- **Soluții:** ASLR, DEP, stack canaries, CFI, media server sandboxing Android 8.0+
+- (~150-180 cuvinte, 1 paragraf compact)
 
-#### 4.3 Malware și Aplicații Malițioase
-**Structură:**
-- **Definiție efectivă:** Software malițios (troieni, spyware, ransomware, adware)
-- **Cum s-a manifestat:**
-  - DroidDream (2011): root exploit + backdoor
-  - GingerMaster (2011): botnet pentru SMS premium
-  - Masque Attack (2014): enterprise cert abuse
-- **Statistici:** McAfee/Kaspersky - creștere 6.4x în 2011
-- **Soluții specifice:**
-  - Google Play Protect (ML-based malware detection)
-  - App sandboxing și permission system
-  - Runtime permissions (Android 6.0+)
-  - Play Store app review (automated + manual)
-  - User education: instalare doar din surse oficiale
-- (2-3 paragrafe, ~200 cuvinte)
+**4.2 Vulnerabilități de Logic și Race Conditions**
+- **Definiție:** TOCTOU, race conditions în kernel/drivers, improper synchronization
+- **Manifestare:** QuadRooter (2016) - race în Qualcomm KGSL driver → root escalation
+- **Soluții:** Kernel hardening, CFI, atomic operations, proper locking mechanisms
+- (~150-180 cuvinte, 1 paragraf compact)
 
-#### 4.4 Riscuri legate de Root/Jailbreak și ROM-uri Terțe
-**Structură:**
-- **Definiție efectivă:** Root = acces UID 0, custom ROMs = firmware modificat
-- **Cum s-a manifestat:**
-  - Subminarea sandbox-ului Android
-  - Bypass Play Integrity/SafetyNet
-  - Pre-rooted ROMs cu backdoors
-  - USB debugging enabled by default (ro.secure=0)
-- **Riscuri concrete:** Banking apps blocked, malware persistent, data exposure
-- **Soluții specifice:**
-  - Play Integrity API (hardware attestation)
-  - SafetyNet/Device Attestation
-  - Verified Boot warning la boot
-  - Banking apps: detectare root și blocare
-  - User awareness: trade-off customization vs security
-- (2-3 paragrafe, ~200 cuvinte)
+**4.3 Vulnerabilități în Permission Model**
+- **Definiție:** Permission bypass, confused deputy, intent hijacking, component exposure
+- **Manifestare:** Apps obțin date fără permisiuni, intent spoofing, IPC abuse
+- **Soluții:** SELinux policies, runtime permissions, component protection, intent validation
+- (~150-180 cuvinte, 1 paragraf compact)
 
-#### 4.5 Pierderea Confidențialității Datelor Personale
-**Structură:**
-- **Definiție efectivă:** Tracking, data leaks, acces neautorizat la date personale
-- **Cum s-a manifestat:**
-  - SQLite databases world-readable (versiuni vechi)
-  - Data exfiltration prin permisiuni excesive
-  - Ad tracking și fingerprinting
-  - Cloud backup vulnerabilities
-- **Impact:** Pierderea privacy, profilare utilizatori, identity theft
-- **Soluții specifice:**
-  - File-Based Encryption (FBE) Android 7.0+
-  - Scoped Storage (Android 10+)
-  - Privacy Dashboard (Android 12+)
-  - Permission auto-reset (unused apps)
-  - App Tracking Transparency
-  - Encrypted backups
-  - User: review app permissions, minimize data sharing
-- (2-3 paragrafe, ~200 cuvinte)
+**4.4 Vulnerabilități Criptografice**
+- **Definiție:** Weak crypto, cert validation flaws, poor key management, SSL/TLS bugs
+- **Manifestare:** MITM attacks, credential theft, insecure data storage
+- **Soluții:** TEE/Keystore, cert pinning, TLS 1.3+, hardware-backed keys
+- (~150-180 cuvinte, 1 paragraf compact)
 
-**Total Cap 4:** ~1,000 cuvinte = 1.7-2 pag
+**4.5 Vulnerabilități de Information Disclosure**
+- **Definiție:** Memory leaks, side-channels, unintended data exposure, tracking APIs
+- **Manifestare:** SQLite world-readable (pre-Android 4.4), Android ID leakage, sensor tracking
+- **Soluții:** FBE, Scoped Storage, Privacy Dashboard, permission auto-reset
+- (~150-180 cuvinte, 1 paragraf compact)
+
+#### PARTEA II: Vectori de Atac
+
+**4.6 Malware și Aplicații Malițioase**
+- **Definiție:** Software malițios exploatând vulnerabilități 4.1-4.5 (troieni, spyware, ransomware)
+- **Manifestare:** DroidDream (2011), GingerMaster (2011), Masque Attack (2014)
+- **Soluții:** Google Play Protect, app sandboxing, runtime permissions, user education
+- (~150-180 cuvinte, 1 paragraf compact)
+
+**4.7 Riscuri Root/Jailbreak și ROM-uri Terțe**
+- **Definiție:** Bypass intenționat protecții Android (UID 0, firmware modificat)
+- **Manifestare:** Pre-rooted ROMs cu backdoors, banking apps blocked, SELinux disabled
+- **Soluții:** Play Integrity API, Verified Boot warnings, user awareness (security vs customization)
+- (~150-180 cuvinte, 1 paragraf compact)
+
+**Total Cap 4:** ~1,050-1,260 cuvinte = 1.8-2.1 pag (COMPACT, respectă limitele)
 
 ---
 
