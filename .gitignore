@@ -1,24 +1,75 @@
 # LaTeX auxiliary files
 *.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+# LaTeX intermediate files
+*.dvi
+*.xdv
+*-converted-to.*
+
+# Bibliography auxiliary files
 *.bbl
 *.bcf
 *.blg
-*.fdb_latexmk
-*.fls
-*.log
-*.out
+*-blx.aux
+*-blx.bib
 *.run.xml
-*.synctex.gz
-*.toc
 
-# Editor specific files
+# Build tools
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+# Build directories
+*.tdo
+_region_.tex
+
+# MiKTeX specific
+*.bak
+*.sav
+
+# Generated PDF output
+*.pdf
+
+# BUT keep reference papers
+!references/*.pdf
+
+# Backup files
 *~
 *.swp
 *.swo
-.DS_Store
+*-backup
 
-# LaTeX build directories
-_region_.tex
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE/Editor folders
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
 
 # Claude Code directory
 .claude/
+
+# Temporary files
+*.tmp
