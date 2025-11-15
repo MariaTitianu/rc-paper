@@ -1,0 +1,2126 @@
+{
+  "table_of_contents": [
+    {
+      "title": "Android Source Code Vulnerability Detection: A Systematic Literature Review",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          72.63230609893799,
+          93.93445998430252
+        ],
+        [
+          497.0729675292969,
+          93.93445998430252
+        ],
+        [
+          497.0729675292969,
+          106.349853515625
+        ],
+        [
+          71.43699359893799,
+          106.349853515625
+        ]
+      ]
+    },
+    {
+      "title": "ACM Reference Format:",
+      "heading_level": null,
+      "page_id": 0,
+      "polygon": [
+        [
+          72.4464960694313,
+          469.72019720077515
+        ],
+        [
+          160.77171993255615,
+          469.72019720077515
+        ],
+        [
+          160.77171993255615,
+          478.3506531715393
+        ],
+        [
+          72.4464960694313,
+          478.3506531715393
+        ]
+      ]
+    },
+    {
+      "title": "1 INTRODUCTION",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          109.6554948091507,
+          98.3009033203125
+        ],
+        [
+          193.9519805908203,
+          98.3009033203125
+        ],
+        [
+          193.9519805908203,
+          107.267333984375
+        ],
+        [
+          109.6554948091507,
+          107.267333984375
+        ]
+      ]
+    },
+    {
+      "title": "1.1 Research Questions",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          109.9400417804718,
+          457.37896728515625
+        ],
+        [
+          210.74606323242188,
+          457.37896728515625
+        ],
+        [
+          210.74606323242188,
+          466.3453674316406
+        ],
+        [
+          109.9400417804718,
+          466.3453674316406
+        ]
+      ]
+    },
+    {
+      "title": "RQ1: What are the existing methods for source code and application analysis?",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          110.01684629917145,
+          494.03240966796875
+        ],
+        [
+          428.9392476081848,
+          494.03240966796875
+        ],
+        [
+          428.9392476081848,
+          503.18133544921875
+        ],
+        [
+          110.01684629917145,
+          503.18133544921875
+        ]
+      ]
+    },
+    {
+      "title": "RQ2: What are existing Android source code vulnerability detection methods, and how to use them to\nprevent vulnerabilities?",
+      "heading_level": null,
+      "page_id": 1,
+      "polygon": [
+        [
+          110.98127102851868,
+          576.0704498291016
+        ],
+        [
+          539.0760519504547,
+          576.0704498291016
+        ],
+        [
+          538.5643310546875,
+          599.0713348388672
+        ],
+        [
+          109.78595852851868,
+          599.0713348388672
+        ]
+      ]
+    },
+    {
+      "title": "RQ3: Which tools and repositories can be used to detect vulnerabilities in Android apps?",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          73.09048855304718,
+          478.5723876953125
+        ],
+        [
+          433.93790674209595,
+          477.9579863548279
+        ],
+        [
+          433.93790674209595,
+          487.7213439941406
+        ],
+        [
+          73.09048855304718,
+          488.24521493911743
+        ]
+      ]
+    },
+    {
+      "title": "1.2 Organization of the Review",
+      "heading_level": null,
+      "page_id": 2,
+      "polygon": [
+        [
+          73.019297093153,
+          545.8579864501953
+        ],
+        [
+          206.68878436088562,
+          545.3295192718506
+        ],
+        [
+          206.3857879638672,
+          554.8243865966797
+        ],
+        [
+          71.823984593153,
+          555.946063041687
+        ]
+      ]
+    },
+    {
+      "title": "2 BACKGROUND AND RELATED LITERATURE REVIEWS",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          109.16052424907684,
+          163.368896484375
+        ],
+        [
+          351.635009765625,
+          163.368896484375
+        ],
+        [
+          351.635009765625,
+          172.3353271484375
+        ],
+        [
+          109.16052424907684,
+          172.3353271484375
+        ]
+      ]
+    },
+    {
+      "title": "2.1 Background",
+      "heading_level": null,
+      "page_id": 3,
+      "polygon": [
+        [
+          109.51893925666809,
+          272.95794677734375
+        ],
+        [
+          180.721999168396,
+          272.95794677734375
+        ],
+        [
+          180.721999168396,
+          281.92437744140625
+        ],
+        [
+          109.51893925666809,
+          281.92437744140625
+        ]
+      ]
+    },
+    {
+      "title": "2.2 Related Literature Reviews",
+      "heading_level": null,
+      "page_id": 5,
+      "polygon": [
+        [
+          109.82006549835205,
+          501.7249450683594
+        ],
+        [
+          241.02560424804688,
+          501.7249450683594
+        ],
+        [
+          241.02560424804688,
+          510.69134521484375
+        ],
+        [
+          108.62475299835205,
+          510.69134521484375
+        ]
+      ]
+    },
+    {
+      "title": "3 METHODOLOGY",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          72.56592062115669,
+          435.79095458984375
+        ],
+        [
+          159.04322814941406,
+          435.04381799697876
+        ],
+        [
+          159.04322814941406,
+          444.7573547363281
+        ],
+        [
+          72.56592062115669,
+          444.7573547363281
+        ]
+      ]
+    },
+    {
+      "title": "3.1 Search Strategy",
+      "heading_level": null,
+      "page_id": 8,
+      "polygon": [
+        [
+          73.05227780342102,
+          560.1129608154297
+        ],
+        [
+          157.50994873046875,
+          560.1129608154297
+        ],
+        [
+          157.50994873046875,
+          569.0793609619141
+        ],
+        [
+          71.85696530342102,
+          570.3193774223328
+        ]
+      ]
+    },
+    {
+      "title": "3.2 Study Selection, Data Extraction and Synthesis",
+      "heading_level": null,
+      "page_id": 9,
+      "polygon": [
+        [
+          109.36530286073685,
+          600.5079650878906
+        ],
+        [
+          320.2975158691406,
+          600.5079650878906
+        ],
+        [
+          320.2975158691406,
+          609.474365234375
+        ],
+        [
+          109.36530286073685,
+          609.474365234375
+        ]
+      ]
+    },
+    {
+      "title": "4 APPLICATION ANALYSIS",
+      "heading_level": null,
+      "page_id": 11,
+      "polygon": [
+        [
+          110.16098022460938,
+          98.3009033203125
+        ],
+        [
+          228.1983904838562,
+          98.3009033203125
+        ],
+        [
+          228.14083862304688,
+          107.267333984375
+        ],
+        [
+          109.04603791236877,
+          107.267333984375
+        ]
+      ]
+    },
+    {
+      "title": "4.1 Static Analysis",
+      "heading_level": null,
+      "page_id": 11,
+      "polygon": [
+        [
+          108.79775011539459,
+          347.1589660644531
+        ],
+        [
+          189.8184814453125,
+          347.1589660644531
+        ],
+        [
+          189.8184814453125,
+          356.1253662109375
+        ],
+        [
+          108.79775011539459,
+          356.1253662109375
+        ]
+      ]
+    },
+    {
+      "title": "4.2 Dynamic Analysis",
+      "heading_level": null,
+      "page_id": 12,
+      "polygon": [
+        [
+          72.47540491819382,
+          135.67914283275604
+        ],
+        [
+          167.01434326171875,
+          135.67914283275604
+        ],
+        [
+          167.01434326171875,
+          144.9383544921875
+        ],
+        [
+          72.47540491819382,
+          144.9383544921875
+        ]
+      ]
+    },
+    {
+      "title": "4.3 Hybrid Analysis",
+      "heading_level": null,
+      "page_id": 12,
+      "polygon": [
+        [
+          72.69123181700706,
+          396.19864654541016
+        ],
+        [
+          159.043212890625,
+          396.19864654541016
+        ],
+        [
+          159.043212890625,
+          405.2123718261719
+        ],
+        [
+          72.69123181700706,
+          405.2123718261719
+        ]
+      ]
+    },
+    {
+      "title": "5 CODE VULNERABILITY DETECTION",
+      "heading_level": null,
+      "page_id": 13,
+      "polygon": [
+        [
+          110.16098022460938,
+          98.3009033203125
+        ],
+        [
+          278.0937502384186,
+          98.3009033203125
+        ],
+        [
+          276.8984377384186,
+          107.267333984375
+        ],
+        [
+          109.41082745790482,
+          107.267333984375
+        ]
+      ]
+    },
+    {
+      "title": "5.1 Machine Learning Methods",
+      "heading_level": null,
+      "page_id": 13,
+      "polygon": [
+        [
+          109.57234311103821,
+          195.56097412109375
+        ],
+        [
+          242.74716186523438,
+          195.56097412109375
+        ],
+        [
+          242.74716186523438,
+          204.52740478515625
+        ],
+        [
+          109.57234311103821,
+          204.52740478515625
+        ]
+      ]
+    },
+    {
+      "title": "5.2 Conventional Methods",
+      "heading_level": null,
+      "page_id": 16,
+      "polygon": [
+        [
+          72.74538347125053,
+          330.4919738769531
+        ],
+        [
+          187.0452880859375,
+          330.4919738769531
+        ],
+        [
+          187.0452880859375,
+          339.4583740234375
+        ],
+        [
+          72.74538347125053,
+          339.4583740234375
+        ]
+      ]
+    },
+    {
+      "title": "5.3 Prevention Techniques",
+      "heading_level": null,
+      "page_id": 20,
+      "polygon": [
+        [
+          72.5135655105114,
+          477.62896728515625
+        ],
+        [
+          187.31279718875885,
+          477.62896728515625
+        ],
+        [
+          187.31279718875885,
+          486.5953674316406
+        ],
+        [
+          72.5135655105114,
+          486.5953674316406
+        ]
+      ]
+    },
+    {
+      "title": "5.4 Discussion on Vulnerability Detection Methods",
+      "heading_level": null,
+      "page_id": 21,
+      "polygon": [
+        [
+          109.448646068573,
+          560.6221876144409
+        ],
+        [
+          322.8439636230469,
+          560.6221876144409
+        ],
+        [
+          322.8439636230469,
+          569.5953674316406
+        ],
+        [
+          109.448646068573,
+          569.5953674316406
+        ]
+      ]
+    },
+    {
+      "title": "6 SUPPORTIVE TOOLS AND REPOSITORIES",
+      "heading_level": null,
+      "page_id": 24,
+      "polygon": [
+        [
+          72.3954359292984,
+          598.5839691162109
+        ],
+        [
+          262.3002624511719,
+          597.51469373703
+        ],
+        [
+          262.3002624511719,
+          607.5503692626953
+        ],
+        [
+          71.2001234292984,
+          607.9698843955994
+        ]
+      ]
+    },
+    {
+      "title": "6.1 Tools",
+      "heading_level": null,
+      "page_id": 25,
+      "polygon": [
+        [
+          109.83339822292328,
+          98.3009033203125
+        ],
+        [
+          152.23952400684357,
+          98.3009033203125
+        ],
+        [
+          152.0789031982422,
+          107.54424440860748
+        ],
+        [
+          108.63808572292328,
+          107.54424440860748
+        ]
+      ]
+    },
+    {
+      "title": "6.2 Repositories and Datasets",
+      "heading_level": null,
+      "page_id": 25,
+      "polygon": [
+        [
+          109.89462661743164,
+          447.615966796875
+        ],
+        [
+          235.6188507080078,
+          447.615966796875
+        ],
+        [
+          235.6188507080078,
+          456.5823669433594
+        ],
+        [
+          109.89462661743164,
+          456.5823669433594
+        ]
+      ]
+    },
+    {
+      "title": "7 THREATS TO VALIDITY OF THE REVIEW",
+      "heading_level": null,
+      "page_id": 27,
+      "polygon": [
+        [
+          109.25639766454697,
+          254.69293212890625
+        ],
+        [
+          292.8154602050781,
+          254.69293212890625
+        ],
+        [
+          292.8154602050781,
+          263.65936279296875
+        ],
+        [
+          109.25639766454697,
+          263.65936279296875
+        ]
+      ]
+    },
+    {
+      "title": "7.1 Construct Validity",
+      "heading_level": null,
+      "page_id": 27,
+      "polygon": [
+        [
+          109.10657322406769,
+          345.8791823387146
+        ],
+        [
+          204.72959899902344,
+          345.8791823387146
+        ],
+        [
+          204.72959899902344,
+          354.9833984375
+        ],
+        [
+          109.10657322406769,
+          354.9833984375
+        ]
+      ]
+    },
+    {
+      "title": "7.2 Internal Validity",
+      "heading_level": null,
+      "page_id": 27,
+      "polygon": [
+        [
+          109.61079096794128,
+          478.43798828125
+        ],
+        [
+          197.108154296875,
+          478.43798828125
+        ],
+        [
+          197.108154296875,
+          487.5723280906677
+        ],
+        [
+          109.61079096794128,
+          487.5723280906677
+        ]
+      ]
+    },
+    {
+      "title": "7.3 External Validity",
+      "heading_level": null,
+      "page_id": 27,
+      "polygon": [
+        [
+          109.65155518054962,
+          569.761962890625
+        ],
+        [
+          198.88351440429688,
+          569.761962890625
+        ],
+        [
+          198.88351440429688,
+          578.7283630371094
+        ],
+        [
+          109.65155518054962,
+          578.7283630371094
+        ]
+      ]
+    },
+    {
+      "title": "7.4 Conclusion Validity",
+      "heading_level": null,
+      "page_id": 28,
+      "polygon": [
+        [
+          72.68625256419182,
+          98.3009033203125
+        ],
+        [
+          173.86465454101562,
+          98.3009033203125
+        ],
+        [
+          173.86465454101562,
+          107.267333984375
+        ],
+        [
+          72.68625256419182,
+          107.267333984375
+        ]
+      ]
+    },
+    {
+      "title": "8 CONCLUSION AND FUTURE WORKS",
+      "heading_level": null,
+      "page_id": 28,
+      "polygon": [
+        [
+          72.20420891046524,
+          269.30587220191956
+        ],
+        [
+          242.95973205566406,
+          269.30587220191956
+        ],
+        [
+          242.95973205566406,
+          278.49932861328125
+        ],
+        [
+          72.20420891046524,
+          278.49932861328125
+        ]
+      ]
+    },
+    {
+      "title": "ACKNOWLEDGMENTS",
+      "heading_level": null,
+      "page_id": 29,
+      "polygon": [
+        [
+          109.87734514474869,
+          98.3009033203125
+        ],
+        [
+          207.96310830116272,
+          98.3009033203125
+        ],
+        [
+          207.96310830116272,
+          107.267333984375
+        ],
+        [
+          109.87734514474869,
+          107.267333984375
+        ]
+      ]
+    },
+    {
+      "title": "REFERENCES",
+      "heading_level": null,
+      "page_id": 29,
+      "polygon": [
+        [
+          109.21349948644638,
+          153.81739461421967
+        ],
+        [
+          166.64930725097656,
+          153.81739461421967
+        ],
+        [
+          166.64930725097656,
+          163.099365234375
+        ],
+        [
+          109.21349948644638,
+          163.099365234375
+        ]
+      ]
+    },
+    {
+      "title": "Android Source Code Vulnerability Detection: A Systematic Literature Review 31",
+      "heading_level": null,
+      "page_id": 30,
+      "polygon": [
+        [
+          72.12645596265793,
+          71.21392822265625
+        ],
+        [
+          501.83746337890625,
+          71.21392822265625
+        ],
+        [
+          501.83746337890625,
+          80.1802978515625
+        ],
+        [
+          72.12645596265793,
+          80.1802978515625
+        ]
+      ]
+    },
+    {
+      "title": "Android Source Code Vulnerability Detection: A Systematic Literature Review 33",
+      "heading_level": null,
+      "page_id": 32,
+      "polygon": [
+        [
+          72.13620471954346,
+          71.21392822265625
+        ],
+        [
+          501.83746337890625,
+          71.21392822265625
+        ],
+        [
+          501.83746337890625,
+          80.1802978515625
+        ],
+        [
+          72.13620471954346,
+          80.1802978515625
+        ]
+      ]
+    },
+    {
+      "title": "Android Source Code Vulnerability Detection: A Systematic Literature Review 35",
+      "heading_level": null,
+      "page_id": 34,
+      "polygon": [
+        [
+          72.32820689678192,
+          71.21392822265625
+        ],
+        [
+          501.83746337890625,
+          71.21392822265625
+        ],
+        [
+          501.83746337890625,
+          80.1802978515625
+        ],
+        [
+          72.32820689678192,
+          80.1802978515625
+        ]
+      ]
+    }
+  ],
+  "page_stats": [
+    {
+      "page_id": 0,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          166
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "Text",
+          9
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Footnote",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 1,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          124
+        ],
+        [
+          "Line",
+          40
+        ],
+        [
+          "Text",
+          7
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 2,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          119
+        ],
+        [
+          "Line",
+          49
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "FigureGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 3,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          115
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 4,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          112
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 5,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          138
+        ],
+        [
+          "Line",
+          40
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 6,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          110
+        ],
+        [
+          "Line",
+          43
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 7,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          101
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "Text",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 8,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          356
+        ],
+        [
+          "Line",
+          150
+        ],
+        [
+          "TableCell",
+          143
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Table",
+          1
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "TableGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 9,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          115
+        ],
+        [
+          "TableCell",
+          112
+        ],
+        [
+          "Line",
+          39
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Table",
+          1
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "TableGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 10,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          108
+        ],
+        [
+          "Line",
+          43
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "FigureGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 11,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          110
+        ],
+        [
+          "Line",
+          40
+        ],
+        [
+          "Text",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 12,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          88
+        ],
+        [
+          "Line",
+          39
+        ],
+        [
+          "Text",
+          7
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 13,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          100
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "TextInlineMath",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 14,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          127
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 15,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          103
+        ],
+        [
+          "Line",
+          42
+        ],
+        [
+          "Text",
+          5
+        ],
+        [
+          "PageHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 16,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          107
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 17,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          290
+        ],
+        [
+          "Line",
+          135
+        ],
+        [
+          "TableCell",
+          52
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Table",
+          2
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "TextInlineMath",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 18,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          100
+        ],
+        [
+          "Line",
+          42
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 19,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          111
+        ],
+        [
+          "Line",
+          42
+        ],
+        [
+          "Text",
+          6
+        ],
+        [
+          "PageHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 20,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          285
+        ],
+        [
+          "Line",
+          136
+        ],
+        [
+          "TableCell",
+          48
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Table",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 21,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          103
+        ],
+        [
+          "Line",
+          42
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 22,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          44
+        ],
+        [
+          "Line",
+          18
+        ],
+        [
+          "Text",
+          3
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Figure",
+          2
+        ],
+        [
+          "Caption",
+          2
+        ],
+        [
+          "FigureGroup",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 23,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          48
+        ],
+        [
+          "Line",
+          21
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Figure",
+          1
+        ],
+        [
+          "Caption",
+          1
+        ],
+        [
+          "FigureGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 24,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          15
+        ],
+        [
+          "Line",
+          8
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Figure",
+          2
+        ],
+        [
+          "Caption",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "FigureGroup",
+          2
+        ],
+        [
+          "SectionHeader",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 25,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          138
+        ],
+        [
+          "Line",
+          41
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          3
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "TextInlineMath",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 26,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          295
+        ],
+        [
+          "Line",
+          102
+        ],
+        [
+          "TableCell",
+          98
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Table",
+          2
+        ],
+        [
+          "Text",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 27,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          79
+        ],
+        [
+          "Line",
+          36
+        ],
+        [
+          "Text",
+          7
+        ],
+        [
+          "SectionHeader",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 28,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          76
+        ],
+        [
+          "Line",
+          38
+        ],
+        [
+          "Text",
+          4
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "PageFooter",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 29,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          283
+        ],
+        [
+          "Line",
+          55
+        ],
+        [
+          "ListItem",
+          23
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "SectionHeader",
+          2
+        ],
+        [
+          "Text",
+          2
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 30,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          305
+        ],
+        [
+          "Line",
+          57
+        ],
+        [
+          "ListItem",
+          25
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "PageFooter",
+          1
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 31,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          320
+        ],
+        [
+          "Line",
+          57
+        ],
+        [
+          "ListItem",
+          28
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 32,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          286
+        ],
+        [
+          "Line",
+          58
+        ],
+        [
+          "ListItem",
+          23
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 33,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          284
+        ],
+        [
+          "Line",
+          58
+        ],
+        [
+          "ListItem",
+          26
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 34,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          311
+        ],
+        [
+          "Line",
+          58
+        ],
+        [
+          "ListItem",
+          28
+        ],
+        [
+          "SectionHeader",
+          1
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "PageHeader",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    },
+    {
+      "page_id": 35,
+      "text_extraction_method": "pdftext",
+      "block_counts": [
+        [
+          "Span",
+          165
+        ],
+        [
+          "Line",
+          36
+        ],
+        [
+          "ListItem",
+          14
+        ],
+        [
+          "PageHeader",
+          2
+        ],
+        [
+          "Text",
+          1
+        ],
+        [
+          "ListGroup",
+          1
+        ]
+      ],
+      "block_metadata": {
+        "llm_request_count": 0,
+        "llm_error_count": 0,
+        "llm_tokens_used": 0
+      }
+    }
+  ],
+  "debug_data_path": "debug_data\\CSUR_Android_Vul_Detect_Review_SUBMITTED"
+}
