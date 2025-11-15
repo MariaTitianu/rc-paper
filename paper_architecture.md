@@ -148,7 +148,17 @@
 - **Soluții:** Play Integrity API, Verified Boot warnings, user awareness (security vs customization)
 - (~150-180 cuvinte, 1 paragraf compact)
 
-**Total Cap 4:** ~1,050-1,260 cuvinte = 1.8-2.1 pag (COMPACT, respectă limitele)
+**🔴 FEEDBACK NOV 15:** TABEL COMPARATIV la sfârșitul Cap 4
+
+**4.8 Tabel: Maparea Vulnerabilităților și Soluțiilor Tehnice**
+- **Format:** Inspirat din tabelul Service/Mechanism din cursul prez1-sec
+- **Rânduri:** Vulnerabilități 4.1-4.7 (Memory Corruption, Logic/Race, Permission, Crypto, Info Disclosure, Malware, Root)
+- **Coloane:** Soluții tehnice (ASLR, SELinux, TEE/Keystore, Verified Boot, FBE, Play Protect, CFI, Scoped Storage, Runtime Permissions, Play Integrity)
+- **Celule:** "Y" = soluția mitigează eficient vulnerabilitatea, "-" = nu se aplică
+- **Paragraf explicativ după tabel:** Observații despre ce soluții sunt cele mai versatile (ex: SELinux protejează 5/7 vulnerabilități)
+- (~100 cuvinte paragraf + tabel)
+
+**Total Cap 4:** ~1,150-1,360 cuvinte + tabel = 2-2.3 pag
 
 ---
 
@@ -160,7 +170,9 @@
 
 **Obiectiv:** Analiză tehnică profundă structurată ca un lanț logic
 
-#### 5.1 Stagefright (2015) - Atac Media [~1-1.2 pag]
+**🔴 FEEDBACK NOV 15:** Cristi face 5.2 QuadRooter, Claude a făcut deja 5.1 Stagefright
+
+#### 5.1 Stagefright (2015) - Atac Media [~1-1.2 pag] ✅ COMPLETAT
 
 **5.1.1 Vulnerabilitatea** (1 paragraf, ~120 cuvinte):
 - **Vulnerabilitatea tehnică:** Integer overflow în libstagefright (biblioteca C++ pentru procesare multimedia)
@@ -277,54 +289,72 @@
 
 **🔴 FEEDBACK PROFESOR:** Concluzii = sinteză + starea actuală a sistemului + atacuri care încă se pot face
 
-#### 6.1 Sinteză a Observațiilor (1 paragraf, ~150 cuvinte)
-- **Evoluția modelului de securitate Android:**
-  - De la basic sandboxing (2007) la arhitectură multi-layer (2024)
-  - SELinux, Verified Boot, FBE, TEE, Play Integrity
-- **Lecții din vulnerabilități:**
-  - Stagefright: fragmentarea = Achilles' heel
-  - QuadRooter: vendor code = lanțul slab
-  - Pattern: patch-uri există, dar distribuiton e problema
-- **Provocări permanente:**
-  - Fragmentarea ecosistemului (OEM-uri, carriers)
-  - Tensiunea open-source vs securitate
-  - Third-party dependencies (Qualcomm, MediaTek)
+#### 6.1 Sinteză a Observațiilor (2 paragrafe, ~200 cuvinte)
 
-#### 6.2 Starea Actuală a Securității Android (2024-2025) (2 paragrafe, ~200 cuvinte)
-**Progrese recente:**
+**🔴 FEEDBACK NOV 15:** ELEMENTE COMUNE între Stagefright și QuadRooter
+
+**Paragraful 1 - Elemente comune Stagefright/QuadRooter:**
+- **Cod C/C++ nativ vulnerabil:** Ambele exploatează componente native (libstagefright vs Qualcomm drivers)
+- **Escaladare privilegii:** Stagefright → system/root, QuadRooter → root direct (UID 0)
+- **Impact masiv similar:** ~950M dispozitive (Stagefright) vs ~900M (QuadRooter)
+- **Vendor code = lanțul slab:** Google Media components vs Qualcomm proprietary drivers
+- **Fragmentare ecosistem:** Provocare comună la distribuirea patch-urilor (multe dispozitive niciodată update-ate)
+- **Răspuns Google similar:** Monthly Security Updates implementat după Stagefright, consolidat după QuadRooter
+- **Lecție fundamentală:** Third-party/vendor code poate compromite întreaga securitate Android, indiferent de protecțiile framework-ului
+
+**Paragraful 2 - Evoluția și provocări:**
+- **Evoluția modelului:** De la basic sandboxing (2007) la arhitectură multi-layer (2024): SELinux, Verified Boot, FBE, TEE, Play Integrity
+- **Pattern persistent:** Patch-uri există rapid, dar distributia către utilizatori rămâne problema cronică
+- **Provocări permanente:** Fragmentarea ecosistemului (OEM-uri, carriers), tensiunea open-source vs securitate, third-party dependencies (Qualcomm, MediaTek)
+
+#### 6.2 Starea Actuală a Securității Android (2024-2025) (3 paragrafe, ~250 cuvinte)
+
+**🔴 FEEDBACK NOV 15:** Integrare survey-uri CSUR și Dynamic pentru starea actuală
+
+**Paragraful 1 - Perspective din survey-uri academice:**
+- **CSUR Systematic Review (2022) \cite{csur_survey}:** Analiză a 118 studii tehnice (2016-2022) identifică creșterea adoptării Machine Learning pentru detectarea automată a vulnerabilităților
+- **Peak vulnerabilități:** Începând cu 2016, cu 660 CVE-uri documentate în Android Security Bulletins
+- **Categorii persistente:** Memory management, race conditions, API vulnerabilities, side-channel attacks - aceleași prezentate în Cap 4
+- **Trend ML/DL:** Boost semnificativ în aplicarea tehnicilor de învățare automată pentru detectare din 2016
+- **Dynamic Survey (2023) \cite{dynamic_survey}:** Focus pe tehnici de analiză dinamică și runtime behavior pentru detectarea comportamentului malițios
+
+**Paragraful 2 - Progrese recente (2024-2025):**
 - **Project Mainline (2019+):** Core components updatable prin Play Store → bypass OEM delays
 - **Scoped Storage (Android 10+):** Limitare acces filesystem
-- **Privacy Dashboard (Android 12+):** Transparență acces la cameră/microfon/locație
-- **Permission auto-reset:** Revocă permisiuni apps nefolosite
-- **Monthly security bulletins:** Proces matur de patch management
-- **Play Integrity API (2023-2024):** Hardware attestation pentru banking/payment apps
+- **Privacy Dashboard (Android 12+):** Transparență acces la cameră/microfon/locație (ultimele 24 ore)
+- **Permission auto-reset:** Revocă automat permisiuni apps nefolosite după 3 luni
+- **Monthly security bulletins:** Proces matur de patch management (standard industrie post-Stagefright)
+- **Play Integrity API (2023-2024):** Hardware attestation pentru banking/payment apps, înlocuitor SafetyNet
+- **Maturizare ecosistem:** Static analysis dominant, Dynamic analysis complementar, Hybrid analysis în creștere
 
-**Limitări actuale:**
-- **Update fragmentation persistă:** Dispozitive budget și mid-range rămân vulnerabile
-- **Vendor security posture variabil:** Qualcomm, Samsung, Xiaomi cu responsiveness diferit
-- **Custom ROM ecosystem:** Tensiune între enthusiasts și security requirements
-- **Zero-day market:** APT groups și spyware vendors (NSO Pegasus, Quadream)
+**Paragraful 3 - Limitări actuale persistente:**
+- **Update fragmentation:** Dispozitive budget și mid-range rămân vulnerabile (multe niciodată update-ate)
+- **Vendor security variabil:** Qualcomm, Samsung, Xiaomi cu responsiveness diferit la security patches
+- **Custom ROM ecosystem:** Tensiune între enthusiasts (personalizare) și security requirements (Play Integrity)
+- **Zero-day market activ:** APT groups și spyware vendors comerciali (NSO Pegasus, QuaDream Reign)
 
-#### 6.3 Atacuri și Vulnerabilități Actuale (2024-2025) (2 paragrafe, ~200 cuvinte)
-**Ce atacuri încă se pot face:**
-- **Zero-click exploits:** Mesaje MMS/RCS cu payload-uri sofisticate (evoluție Stagefright)
-- **Kernel exploits:** Drivere GPU/Camera/Modem (Qualcomm, ARM Mali)
-- **Supply chain attacks:** Pre-installed malware pe dispozitive budget (Triada, xHelper)
-- **Phishing evolved:** WebView exploits, deepfake voice/video pentru social engineering
-- **Spyware comercial:** Pegasus (NSO Group), Reign (QuaDream) - zero-click, kernel-level
-- **Banking trojans:** Anatsa, SharkBot, Godfather - overlay attacks, accessibility abuse
-- **Credential stuffing:** Password reuse exploitation, 2FA bypass techniques
+#### 6.3 Atacuri și Vulnerabilități Actuale (2024-2025) (3 paragrafe, ~250 cuvinte)
 
-**Vectori de atac persistenți:**
-- **Sideloading APKs:** Utilizatori bypass Play Store protections
-- **Malicious apps în Play Store:** Evaziune temporară a Play Protect
-- **Physical access attacks:** Forensic tools (Cellebrite, GrayKey)
-- **Network-based:** Man-in-the-middle pe WiFi public, DNS hijacking
-- **Social engineering:** Rămâne cel mai eficient vector
+**🔴 FEEDBACK NOV 15:** Integrare CVE-uri din Cap 4 + date din survey-uri
 
-**Tendințe emergente:**
-- **AI-powered attacks:** Generare automată exploits, adaptive malware
-- **Quantum computing threat:** Viitoare compromise a criptografiei actuale (RSA, ECC)
+**Paragraful 1 - Atacuri active confirmate (2024-2025):**
+- **Zero-click exploits (evoluție Stagefright):** MMS/RCS payloads, vulnerabilități în procesare media
+- **Memory corruption persistentă:** CVE-2025-48543 (use-after-free Android Runtime), CVE-2024-49748 (heap overflow Bluetooth), CVE-2025-36907 (heap overflow bootloader), multiple defecte Qualcomm drivers (CVE-2025-21479, CVE-2025-27038)
+- **Race conditions active:** CVE-2025-38352 (TOCTOU în posix-cpu-timers), CVE-2024-43081 (logic error InstallPackageHelper)
+- **Permission bypass exploatat:** CVE-2024-43093 (escaladare privilegii Android Framework), CVE-2025-12080 (Google Messages bypass permissions)
+- **Info disclosure cu impact:** CVE-2025-21042 (LANDFALL spyware zero-click pe Samsung Galaxy), CVE-2024-29745, CVE-2024-32896 (exploatat activ)
+- **Kernel exploits:** GPU drivers (ARM Mali, Qualcomm Adreno), Camera/Modem drivers, bypass MTE (Memory Tagging Extension) prin CVE-2025-0072
+
+**Paragraful 2 - Malware și spyware sofisticat:**
+- **Spyware comercial:** Pegasus (NSO Group), Reign (QuaDream) - lanțuri complexe zero-click kernel-level
+- **Banking trojans moderni:** Anatsa, SharkBot, Godfather - overlay attacks + accessibility abuse + bypass biometric
+- **Supply chain compromise:** Pre-installed malware pe dispozitive budget (Triada, xHelper)
+- **Play Store evasion:** Sute de aplicații malițioase ocolesc securitatea Android 13 și Google Play Protect (Bitdefender report 2025)
+- **Creștere amenințări:** Kaspersky raportează +29% atacuri smartphone Android (H1 2025 vs 2024), Zscaler documentează +67% malware mobil
+
+**Paragraful 3 - Vectori persistenți și tendințe:**
+- **Vectori clasici activi:** Sideloading APKs (bypass Play Store), Physical access (Cellebrite, GrayKey), MITM pe WiFi public, Social engineering (cel mai eficient)
+- **Tendințe emergente:** AI-powered attacks (generare automată exploits, adaptive malware), Quantum computing threat (viitoare compromise RSA/ECC)
 
 #### 6.4 Bibliografie
 ✅ **\printbibliography** (automatic LaTeX)
@@ -430,13 +460,21 @@
 - [x] Introducere (context + obiective)
 - [x] Arhitectura Android (fundație tehnică)
 - [x] Modelul de Securitate (mecanisme + extensii moderne)
-- [ ] **Vulnerabilități + Soluții integrate** (definiție + manifestare + soluții per vulnerabilitate)
-- [ ] **Studii de Caz format lanț** (vulnerabilitate → atac → acțiuni → efecte → soluții)
-- [ ] **Concluzii actualizate** (sinteză + stare actuală + atacuri curente)
-- [ ] Bibliografie completă
+- [x] Cap 4.1-4.7 Vulnerabilități scrise (definiție + manifestare + soluții)
+- [ ] **Cap 4.8 Tabel comparativ vulnerabilități/soluții** (FEEDBACK NOV 15)
+- [x] **Cap 5.1 Stagefright** (lanț complet: vulnerabilitate → atac → acțiuni → efecte → soluții)
+- [ ] **Cap 5.2 QuadRooter** (Cristi - același format lanț)
+- [ ] **Cap 6.1 Sinteză** (cu elemente comune Stagefright/QuadRooter - FEEDBACK NOV 15)
+- [ ] **Cap 6.2 Starea actuală** (integrare survey-uri CSUR + Dynamic - FEEDBACK NOV 15)
+- [ ] **Cap 6.3 Atacuri curente** (CVE-uri Cap 4 + survey-uri - FEEDBACK NOV 15)
+- [ ] Bibliografie completă (adăugat csur_survey, dynamic_survey)
 - [ ] Contribuția autorilor
 
 ---
 
-**Ultima actualizare:** 10 noiembrie 2025
-**Status:** Arhitectură restructurată conform feedback profesor - 50% completă, gata pentru scrierea capitolelor rămase
+**Ultima actualizare:** 15 noiembrie 2024 (FEEDBACK NOV 15 integrat)
+**Status:** Arhitectură actualizată cu:
+- Tabel comparativ Cap 4 (vulnerabilități → soluții)
+- Elemente comune Stagefright/QuadRooter în Cap 6.1
+- Survey-uri CSUR și Dynamic integrate în Cap 6.2-6.3
+- CVE-uri actuale 2024-2025 detaliate în Cap 6.3
