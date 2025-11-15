@@ -302,6 +302,37 @@ Manifestările practice includ ROM-uri custom pre-rooted care conțin backdoors 
 
 Soluțiile tehnice includ Play Integrity API care utilizează atestarea hardware pentru detectarea dispozitivelor root-ate, bootloader-ului deblocat sau firmware-ului modificat, Verified Boot care afișează avertismente vizibile la pornire pe dispozitive modificate, notificări persistente în Android pentru aplicații cu acces root activ, și educația utilizatorilor despre compromisurile de securitate implicate în root-area dispozitivelor, subliniind că personalizarea trebuie echilibrată cu necesarul de protecție a datelor sensibile și financiare.
 
+\subsection{Maparea Vulnerabilităților și Soluțiilor Tehnice}
+
+Tabelul \ref{tab:vuln_solutions} sintetizează relația între vulnerabilitățile prezentate în secțiunile anterioare (4.1–4.7) și mecanismele de protecție implementate în Android. Această mapare oferă o perspectivă sistematică asupra eficacității relative a diferitelor soluții tehnice în mitigarea claselor de vulnerabilități identificate.
+
+\begin{table*}[t]
+\centering
+\caption{Maparea vulnerabilităților Android și soluțiilor tehnice de mitigare}
+\label{tab:vuln_solutions}
+\small
+\begin{tabular}{@{}lcccccccccc@{}}
+\toprule
+\textbf{Vulnerabilitate} & \textbf{ASLR} & \textbf{SELinux} & \textbf{TEE/} & \textbf{Verified} & \textbf{FBE} & \textbf{Play} & \textbf{CFI} & \textbf{Scoped} & \textbf{Runtime} & \textbf{Play} \\
+ & & & \textbf{Keystore} & \textbf{Boot} & & \textbf{Protect} & & \textbf{Storage} & \textbf{Perm.} & \textbf{Integrity} \\
+\midrule
+Memory Corruption & Y & Y & -- & -- & -- & -- & Y & -- & -- & -- \\
+Logic/Race Cond. & -- & Y & -- & -- & -- & -- & Y & -- & -- & -- \\
+Permission Model & -- & Y & -- & -- & -- & -- & -- & -- & Y & -- \\
+Cryptographic & -- & -- & Y & Y & -- & -- & -- & -- & -- & -- \\
+Info. Disclosure & -- & Y & -- & -- & Y & -- & -- & Y & -- & -- \\
+Malware & -- & Y & -- & -- & -- & Y & -- & -- & Y & -- \\
+Root/Jailbreak & -- & Y & -- & Y & -- & -- & -- & -- & -- & Y \\
+\bottomrule
+\end{tabular}
+\end{table*}
+
+Analiza tabelului relevă câteva observații importante. SELinux se remarcă ca cea mai versatilă soluție, oferind protecție eficientă împotriva a șase din cele șapte categorii de vulnerabilități prin impunerea de politici Mandatory Access Control (MAC) care restricționează acțiunile proceselor independent de privilegiile Unix tradiționale. Această eficacitate transversală explică implementarea graduală dar sistematică a SELinux în Android, trecând de la modul permissive la modul enforcing în versiunile recente.
+
+Vulnerabilitățile de memory corruption beneficiază de apărare în profunzime prin combinarea a trei mecanisme complementare: ASLR randomizează adresele pentru a preveni exploatarea deterministă, CFI validează destinațiile call-urilor pentru a preveni deturnarea controlului, iar SELinux limitează daunele chiar dacă exploatarea reușește. Această strategie multi-nivel demonstrează necesitatea abordărilor defensive stratificate, deoarece niciun singur mecanism nu oferă protecție completă.
+
+Vulnerabilitățile criptografice și cele legate de modelul de permisiuni necesită soluții specializate: TEE/Keystore pentru izolarea hardware a materialului criptografic, Verified Boot pentru validarea lanțului de încredere, și Runtime Permissions pentru controlul granular al accesului la resurse. Absența mecanismelor de protecție în anumite celule ale tabelului (marcate cu "--") nu indică neapărat vulnerabilități neadresate, ci mai degrabă că aceste soluții nu sunt aplicabile sau relevante pentru categoria respectivă de amenințări.
+
 % ================================
 % 5. STUDII DE CAZ - VULNERABILITĂȚI REPREZENTATIVE
 % ================================
@@ -344,6 +375,44 @@ Impactul vulnerabilității Stagefright a fost masiv, afectând aproximativ 950 
 Răspunsul la vulnerabilitatea Stagefright a marcat un moment de cotitură în politicile de securitate Android. Google a publicat primul set de patch-uri prin Android Security Bulletin în august 2015, adresând vulnerabilitățile CVE-2015-1538 și CVE-2015-1539 \cite{android_bulletin_2015_08}. Ca urmare directă a gravității Stagefright, Google a implementat un program de actualizări lunare de securitate (Monthly Security Updates), devenind astfel un standard în industria mobilă. Îmbunătățirile tehnice au inclus întărirea mecanismului ASLR (Address Space Layout Randomization) pentru a face mai dificilă exploatarea vulnerabilităților de tip memory corruption, precum și implementarea unui sandboxing mai strict al procesului Media Server în Android 7.0 și versiuni ulterioare. Android 8.0 (Oreo) a introdus o refactorizare completă a arhitecturii Media Server, separând componentele în procese distincte cu privilegii minime, reducând astfel suprafața de atac. Pentru utilizatori, singura mitigare temporară disponibilă inițial a fost dezactivarea funcției de auto-retrieve pentru mesajele MMS, o soluție incompletă care nu proteja împotriva celorlalte vectori de atac (web, email). Provocarea majoră în răspândirea patch-urilor a fost fragmentarea ecosistemului Android, unde mulți producători de dispozitive și operatori de telefonie mobilă nu au furnizat niciodată actualizări pentru modelele mai vechi, lăsând milioane de utilizatori expuși. Lecția principală din incidentul Stagefright a fost recunoașterea necesității unui sistem robust de distribuție a patch-urilor de securitate, conducând la Monthly Security Updates care au devenit astăzi un standard acceptat în întreaga industrie.
 
 \subsection{QuadRooter (2016) - Vulnerabilități în Drivers}
+
+\subsubsection{Vulnerabilitatea}
+
+QuadRooter reprezintă o suită de patru vulnerabilități critice descoperite în driverele software proprietare ale Qualcomm, cel mai important producător de chipset-uri LTE la nivel global cu o cotă de piață de 65\%. Vulnerabilitățile au fost identificate de echipa Check Point Research în aprilie 2016 și dezvăluite public în august 2016 la conferința DEF CON 24, după respectarea politicii standard de dezvăluire de 90 de zile (CERT/CC policy) care a permis producerea de patch-uri înainte de anunțul public \cite{quadrooter_report}. Cele patru vulnerabilități sunt catalogate sub CVE-2016-2503, CVE-2016-2504, CVE-2016-2059 și CVE-2016-5340, toate permițând escaladarea privilegiilor către nivel root prin exploatarea unor defecte în patru module critice ale arhitecturii Qualcomm.
+
+Modulele afectate includ: \textbf{IPC Router} (CVE-2016-2059), care oferă comunicare inter-proces pentru componentele Qualcomm și driverele hardware; \textbf{Ashmem} (CVE-2016-5340), subsistemul Android de alocare a memoriei partajate modificat de Qualcomm pentru acces facil din driverele GPU; \textbf{KGSL} - Kernel Graphics Support Layer (CVE-2016-2503 și CVE-2016-2504), driver-ul kernel responsabil pentru randarea grafică prin comunicare cu binare user-mode, inclusiv modulul kgsl\_sync pentru sincronizare CPU-aplicații. Impactul a fost masiv, afectând aproximativ 900 de milioane de dispozitive Android construite pe chipset-uri Qualcomm, inclusiv modele populare precum Samsung Galaxy S7/S7 Edge, Google Nexus 5X/6/6P, LG G4/G5/V10, HTC One M9 și HTC 10, OnePlus One/2/3, BlackBerry Priv, și Blackphone 1/2. Qualcomm a revizuit vulnerabilitățile, le-a clasificat ca risc ridicat și a confirmat lansarea de patch-uri către producătorii de echipamente originale (OEM-uri).
+
+\subsubsection{Definirea Atacului}
+
+QuadRooter permite atacuri de escaladare a privilegiilor către nivel root (UID 0) prin exploatarea oricăreia dintre cele patru vulnerabilități folosind o aplicație malițioasă. Aspectul critic al acestui atac este că aplicațiile exploatatoare nu necesită permisiuni speciale pentru a profita de vulnerabilități, eliminând orice suspiciune pe care utilizatorii ar putea-o avea la instalare. Această caracteristică transformă QuadRooter într-un vector de atac deosebit de periculos, deoarece aplicațiile pot părea complet benigne din perspectiva sistemului de permisiuni Android, solicitând doar permisiuni standard care nu ridică alarme. Vulnerabilitățile sunt înglobate în driverele software Qualcomm care vin pre-instalate cu chipset-urile, integrându-se în build-urile Android pe care producătorii le dezvoltă pentru dispozitivele lor. Această poziționare timpurie în lanțul de aprovizionare face ca vulnerabilitățile să fie extrem de dificil de remediat, necesitând coordonare complexă între Qualcomm, OEM-uri, distribuitori și operatori de telefonie mobilă înainte ca patch-urile să ajungă la utilizatorii finali.
+
+\subsubsection{Acțiunile (Desfășurarea Atacului)}
+
+Desfășurarea unui atac QuadRooter urmează o secvență care exploatează caracterul invizibil al vulnerabilităților pentru utilizatorul obișnuit:
+
+\textbf{Pasul 1 - Instalarea Aplicației Malițioase:} Atacatorul distribuie o aplicație malițioasă care conține cod de exploatare pentru una sau mai multe dintre cele patru vulnerabilități QuadRooter. Aplicația nu solicită permisiuni neobișnuite, trecând neobservată prin procesul de instalare și evitând suspiciunea utilizatorului.
+
+\textbf{Pasul 2 - Declanșarea Exploatării:} La execuție, aplicația exploatează vulnerabilitatea specifică din driver-ul Qualcomm vizat. Pentru CVE-2016-2059 (IPC Router), atacul exploatează o logică defectuoasă de blocare (locking logic) în funcția de conversie a socket-urilor, care permite coruperea listei de socket-uri de monitorizare prin apelarea funcției pe un socket deja monitorizat, ștergându-l din listă în timp ce blochează lista greșită. Pentru CVE-2016-5340 (Ashmem), atacul profită de verificarea incorectă a tipului de fișier în funcția \texttt{is\_ashmem\_file}, folosind caracteristica Obb deprecată pentru a crea un fișier fals numit "ashmem" pe un filesystem personalizat. Pentru CVE-2016-2503 și CVE-2016-2504 (KGSL), atacul exploatează condiții de cursă (race conditions) în funcțiile de creare și distrugere a obiectelor, permițând ca refcount-ul să scadă sub zero sau ca obiectele să fie eliberate înainte de inițializare completă, rezultând în vulnerabilități use-after-free.
+
+\textbf{Pasul 3 - Escaladarea Privilegiilor:} Exploatarea reușită a vulnerabilității permite atacatorului să execute cod arbitrar la nivel kernel cu privilegii elevate. În cazul CVE-2016-2059, atacatorul poate controla complet conținutul argumentului \texttt{q} în funcția \texttt{\_\_wake\_up\_common}, permițând apelarea oricărei funcții kernel și controlul primului argument. Prin înlănțuirea apelurilor de funcții, atacatorul poate apela \texttt{enforcing\_setup} pentru a dezactiva SELinux (setând status la "permissive") și apoi \texttt{commit\_creds} cu structura \texttt{init\_cred} ca prim argument pentru a seta UID la 0 și a obține capabilitățile maxime disponibile în sistem.
+
+\textbf{Pasul 4 - Obținerea Controlului Root:} Cu privilegii root și SELinux dezactivat, aplicația malițioasă obține control administrativ complet asupra dispozitivului. Acest nivel de control permite executarea de comenzi privilegiate care nu sunt disponibile pe dispozitive configurate din fabrică, inclusiv modificarea sau ștergerea fișierelor la nivel de sistem, adăugarea sau eliminarea aplicațiilor, și accesarea hardware-ului dispozitivului.
+
+\textbf{Pasul 5 - Compromiterea Completă:} Atacatorul poate accesa toate resursele hardware ale dispozitivului, inclusiv touchscreen-ul, camera foto și video, microfonul pentru înregistrări audio, GPS-ul pentru urmărirea locației, și alți senzori. Poate instala malware persistent, exfiltra date sensibile, sau transforma dispozitivul într-un instrument de spionaj continuu.
+
+\subsubsection{Efectele (Impactul)}
+
+Impactul vulnerabilităților QuadRooter a fost dramatic, afectând aproximativ 900 de milioane de dispozitive Android la nivel global, reprezentând o parte semnificativă din smartphone-urile și tabletele în utilizare în 2016. Compromiterea unui dispozitiv prin QuadRooter oferă atacatorului acces root complet și nerestricționat, permițând modificarea sau ștergerea fișierelor la nivel de sistem, instalarea de aplicații fără autorizare, și accesul la toate componentele hardware. Atacatorul poate accesa camera foto și video pentru supraveghere vizuală, microfonul pentru înregistrări audio continue, GPS-ul pentru urmărirea în timp real a locației, lista de contacte, istoricul mesajelor și apelurilor, precum și orice date personale, corporative sau financiare stocate pe dispozitiv. Vulnerabilitatea permite instalarea de malware persistent sub formă de rootkit-uri care supraviețuiesc restart-urilor, spyware pentru monitorizare pe termen lung, sau ransomware pentru extorcare financiară.
+
+Aspectul cel mai îngrijorător al QuadRooter este simplitatea vectorului de atac combinată cu absența semnalelor de avertizare pentru utilizator. Aplicațiile malițioase nu necesită permisiuni speciale care ar putea ridica suspiciuni, iar exploatarea se execută complet în background fără nicio indicație vizibilă. Vulnerabilitățile au fost exploatate în atacuri țintite împotriva jurnaliștilor, activiștilor pentru drepturile omului și oficialilor guvernamentali, demonstrând valoarea lor în operațiuni de spionaj cibernetic și supraveghere statală. Fragmentarea ecosistemului Android a amplificat impactul, deoarece multe dispozitive mai vechi sau modele de gamă medie nu au primit niciodată patch-uri de securitate, lăsând milioane de utilizatori expuși pe termen nedeterminat. Check Point a lansat o aplicație QuadRooter Scanner pentru a permite utilizatorilor să verifice dacă dispozitivele lor sunt vulnerabile, iar aplicația a detectat rate ridicate de expunere chiar și luni de zile după dezvăluirea publică a vulnerabilităților.
+
+\subsubsection{Soluțiile (Patch-uri și Mitigări)}
+
+Răspunsul la vulnerabilitățile QuadRooter a evidențiat provocările severe ale fragmentării ecosistemului Android și complexitatea lanțului de aprovizionare în distribuirea patch-urilor de securitate. Qualcomm a produs patch-uri pentru toate cele patru vulnerabilități și le-a distribuit către producătorii de echipamente originale (OEM-uri), dar procesul de integrare și distribuție către utilizatorii finali a fost lent și incomplet. Google a inclus patch-urile în Android Security Bulletins eșalonate: CVE-2016-2503 a fost adresată în buletinul din iulie 2016 (2016-07-01), CVE-2016-2504 în buletinul din august 2016 (2016-08-01), iar CVE-2016-2059 și CVE-2016-5340 au fost rezolvate în buletinul din septembrie 2016 (2016-09-06). Pentru CVE-2016-2059, Android a implementat o regulă SELinux pentru a bloca exploatarea chiar și pe dispozitive care nu au primit patch-ul complet al driver-ului.
+
+Fragmentarea ecosistemului Android a creat provocări majore în distribuirea patch-urilor. Lanțul de aprovizionare necesită ca patch-urile să treacă prin mai multe niveluri: de la Qualcomm (furnizor de chipset) la OEM-uri (producători de dispozitive) la distribuitori și operatori de telefonie mobilă, și în final la utilizatori. Acest proces consumă săptămâni sau chiar luni, lăsând utilizatorii neprotejați pentru perioade extinse. Multe dispozitive, în special modelele mai vechi sau de gamă medie, nu au primit niciodată actualizări de securitate, fie din cauza limitărilor hardware care împiedicau instalarea versiunilor mai noi de Android, fie din cauza politicilor OEM-urilor și operatorilor de a nu oferi suport pe termen lung pentru toate modelele. Federal Communications Commission (FCC) și Federal Trade Commission (FTC) din Statele Unite au lansat investigații asupra procesului defectuos de actualizare de securitate Android, solicitând explicații de la operatori și producători pentru întârzierile sistematice.
+
+Check Point a publicat recomandări pentru utilizatori: instalarea imediată a actualizărilor Android disponibile, înțelegerea riscurilor asociate cu root-area intențională sau accidentală a dispozitivelor, evitarea side-loading-ului de aplicații (.APK) sau descărcării din surse terțe preferând exclusiv Google Play, citirea atentă a permisiunilor solicitate la instalarea aplicațiilor, utilizarea doar a rețelelor WiFi cunoscute și de încredere, și adoptarea soluțiilor mobile de securitate care detectează comportament suspect. Lecția principală din incidentul QuadRooter a fost recunoașterea că vulnerabilitățile introduse timpuriu în lanțul de aprovizionare (la nivel de chipset și driver) sunt extrem de dificil de remediat și necesită coordonare standardizată în întreaga industrie pentru a asigura protecția utilizatorilor finali.
 
 % ================================
 % 6. CONCLUZII
