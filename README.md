@@ -1,265 +1,265 @@
-# Research Paper LaTeX Template
+# Android Security Architecture Research Paper
 
-This repository contains comprehensive LaTeX templates for writing research papers.
+Research paper analyzing Android platform security mechanisms, protection architectures, and vulnerability patterns.
 
-## Files
+## Overview
 
-- `research_paper.tex` - Basic LaTeX document (single column)
-- `research_paper_enhanced.tex` - Advanced template with algorithms, code listings, and two-column layout
-- `references.bib` - Bibliography file with comprehensive examples
-- `build_paper.bat` - Windows batch script for easy compilation
-- `README.md` - This file
+**Title**: Arhitectura de Securitate a Platformei Android: Analiza Mecanismelor de Protecție
 
-## Templates Overview
+**Authors**: Budiul Cristian-Carol, Titianu Maria
 
-### Basic Template (`research_paper.tex`)
-- Single-column layout
-- Clean and simple structure
-- Ideal for longer papers or book chapters
+**Course**: Rețele de Calculatoare (RC) - Master's Program
 
-### Enhanced Template (`research_paper_enhanced.tex`)
-- Two-column conference/journal style
-- Algorithm pseudocode support
-- Code listings with syntax highlighting
-- More theorem environments
-- Ablation studies and detailed experimental sections
-- Professional formatting
+## Project Structure
 
-## Structure
-
-Both templates include:
-
-1. **Title and Abstract** - Title, author information, keywords, and abstract
-2. **Introduction** - Motivation, research questions, contributions
-3. **Related Work** - Literature review and positioning
-4. **Methodology** - Research design, algorithms, implementation
-5. **Experiments** - Datasets, baselines, quantitative/qualitative results
-6. **Discussion** - Interpretation, limitations, threats to validity
-7. **Conclusion** - Summary and future directions
-8. **Bibliography** - References section
-9. **Appendices** - Additional materials
-
-## Quick Start
-
-### Windows
-1. Double-click `build_paper.bat` to compile
-2. Or use the commands below in terminal
-
-### Manual Compilation
-
-#### Using pdflatex
-```bash
-pdflatex research_paper_enhanced.tex
-biber research_paper_enhanced
-pdflatex research_paper_enhanced.tex
-pdflatex research_paper_enhanced.tex
 ```
-
-#### Using latexmk (recommended)
-```bash
-latexmk -pdf research_paper_enhanced.tex
+rc-paper/
+├── research_paper.tex          # Main LaTeX document
+├── research_paper.pdf          # Compiled output
+├── references.bib              # Bibliography database
+├── android_architecture.png    # Architecture diagram
+├── build_paper.bat             # Windows build script
+├── references/                 # Reference PDF papers
+└── [extracted_papers]/         # Markdown conversions of source materials
 ```
-
-#### Using Overleaf (Online)
-1. Upload files to Overleaf.com
-2. Main file: `research_paper_enhanced.tex`
-3. Compiler: pdfLaTeX
-4. Compile and download PDF
-
-## Features
-
-### Enhanced Template Features
-
-- **Two-column layout** for conference/journal submissions
-- **Algorithm pseudocode** using `algorithm` package
-- **Code snippets** with syntax highlighting
-- **Tables** with professional formatting (booktabs)
-- **Mathematical notation** with AMS packages
-- **Theorem environments** (theorem, lemma, proposition, corollary, definition, example)
-- **Hyperlinks** with colored references
-- **Subfigures** for multiple images
-- **Professional tables** with top/mid/bottom rules
-
-### Bibliography Management
-
-The `references.bib` file includes templates for:
-- Journal articles
-- Conference papers
-- Books and chapters
-- Technical reports
-- Online resources
-- Preprints (arXiv)
-- Software citations
-- Standards
-- PhD thesis
-
-## Customization
-
-### 1. Metadata
-Edit at the top of the `.tex` file:
-```latex
-\title{Your Title}
-\author{Your Name\footnote{Institution}}
-```
-
-### 2. Abstract and Keywords
-Update with your research summary.
-
-### 3. Content
-Replace example content with your actual research.
-
-### 4. References
-Add your references in `references.bib` and cite them:
-- `\cite{key}` - inline citation
-- `\parencite{key}` - parentheses
-- `\footcite{key}` - footnote
-
-### 5. Figures
-```latex
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{figure.png}
-    \caption{Your caption}
-    \label{fig:myfigure}
-\end{figure}
-```
-
-### 6. Algorithms
-The enhanced template includes algorithm support - see example in `research_paper_enhanced.tex`
-
-### 7. Code Listings
-Use the `lstlisting` environment for code snippets with syntax highlighting.
-
-## Paper Sections Explained
-
-### Introduction
-- **Motivation**: Why this work matters
-- **Research Questions**: What you're answering
-- **Contributions**: What you're adding
-- **Organization**: Paper structure overview
-
-### Related Work
-- Categorize existing work
-- Identify gaps your work addresses
-- Position your contribution
-
-### Methodology
-- Problem formulation with equations
-- Algorithm description
-- Theoretical analysis (proofs)
-- Implementation details
-
-### Experimental Evaluation
-- Datasets and statistics
-- Baselines for comparison
-- Evaluation metrics
-- Quantitative results tables
-- Qualitative analysis figures
-- Ablation studies
-
-### Discussion
-- Interpret results
-- Acknowledge limitations
-- Discuss threats to validity
-- Outline future work
-
-### Conclusion
-- Summarize contributions
-- Highlight significance
-- Suggest future directions
-
-## Tips for Writing
-
-### Abstract (150-250 words)
-- Context: Why this work matters
-- Problem: What you're addressing
-- Method: Brief methodology
-- Results: Key findings with numbers
-- Impact: Why it matters
-
-### Introduction
-- Start broad, narrow to your problem
-- Clearly state contributions
-- Outline paper structure
-
-### Methodology
-- Be detailed enough for replication
-- Include algorithm pseudocode
-- Explain design choices
-- Provide theoretical grounding
-
-### Results
-- Report metrics with statistical significance
-- Use clear, informative tables
-- Include qualitative examples
-- Perform ablation studies
-
-### Discussion
-- Interpret what results mean
-- Be honest about limitations
-- Discuss generalizability
-- Suggest specific future work
 
 ## Requirements
 
-### Software
-- LaTeX distribution:
-  - **TeX Live** (recommended for Linux/Windows)
-  - **MiKTeX** (Windows)
-  - **MacTeX** (macOS)
-- Editor options:
-  - **Overleaf** (online, free)
-  - **TeXstudio** (offline)
-  - **VS Code** with LaTeX Workshop extension
-  - **LyX** (visual editor)
+### LaTeX Distribution
+- **MiKTeX** (Windows) - Recommended
+- **TeX Live** (Linux/macOS)
+- **MacTeX** (macOS)
 
-### Packages
-Already included in templates:
-- `amsmath`, `amssymb` - Math
-- `graphicx` - Images
-- `hyperref` - Links
-- `biblatex` - Bibliography
-- `algorithm` - Pseudocode (enhanced only)
-- `listings` - Code (enhanced only)
+### Required Packages
+All packages are included in the document and will be auto-installed by MiKTeX:
+- `babel` (Romanian language support)
+- `biblatex` (Bibliography management)
+- `graphicx`, `subcaption` (Figures)
+- `booktabs` (Tables)
+- `algorithm`, `algpseudocode` (Algorithms)
+- `listings` (Code snippets)
+- `hyperref` (Hyperlinks)
 
-## Citation Commands
+## Installation
 
-```latex
-\cite{key}           % Basic citation [1]
-\parencite{key}       % Parentheses (Smith 2023)
-\footcite{key}        % Footnote
-\citeauthor{key}      % Author name only
-\citetitle{key}       % Title only
-\citeyear{key}        % Year only
+### 1. Install MiKTeX (Windows)
+
+```bash
+# Download from https://miktex.org/download
+# Or via winget:
+winget install MiKTeX.MiKTeX
 ```
 
-## Common Issues
+### 2. Clone Repository
 
-### Bibliography not compiling?
-1. Make sure `references.bib` exists
-2. Run `biber` (or `bibtex` if using natbib)
-3. Run `pdflatex` twice after bibliography
+```bash
+git clone <repository-url>
+cd rc-paper
+```
 
-### Missing packages?
-Install missing packages using your LaTeX distribution's package manager.
+### 3. Install Missing Packages
 
-### Table too wide?
-- Use `\resizebox{0.9\textwidth}{!}{...}`
-- Or use `tabular*` environment
-- Consider shortening column headers
+On first compilation, MiKTeX will prompt to install missing packages. Select "Install" for automatic installation.
 
-### Algorithm not compiling?
-Switch from `algorithmic` to `algpseudocode` package.
+## Compilation
 
-## Resources
+### Option 1: Claude Code + VSCode Auto-Compile (Recommended)
 
-- [Overleaf LaTeX Documentation](https://www.overleaf.com/learn)
-- [BibTeX Entry Types](https://www.bibtex.com/e/entry-types/)
-- [LaTeX Mathematics](https://en.wikibooks.org/wiki/LaTeX/Mathematics)
-- [PGF/TikZ for Diagrams](https://www.overleaf.com/learn/latex/pgf-tikz)
+1. Install VSCode with "LaTeX Workshop" extension
+2. Open project folder in VSCode (enables auto-compile on save)
+3. Use Claude Code CLI to edit `research_paper.tex`:
+   ```bash
+   claude
+   # Then request edits like:
+   # "Add a new section about SELinux"
+   # "Fix the table formatting in section 4"
+   # "Add citation for the QuadRooter paper"
+   ```
+4. Claude Code saves changes → VSCode auto-compiles → PDF updates
+5. View generated PDF in VSCode or external viewer
+
+### Option 2: Windows Batch Script
+
+```bash
+# Double-click or run in terminal:
+build_paper.bat
+```
+
+This script:
+1. Runs `pdflatex` (first pass)
+2. Runs `biber` (bibliography processing)
+3. Runs `pdflatex` (second pass for citations)
+4. Runs `pdflatex` (final pass for cross-references)
+5. Cleans auxiliary files
+
+### Option 3: Manual Compilation
+
+```bash
+# Full compilation sequence:
+pdflatex research_paper.tex
+biber research_paper
+pdflatex research_paper.tex
+pdflatex research_paper.tex
+```
+
+### Option 4: Using latexmk
+
+```bash
+# Automatic recompilation on changes:
+latexmk -pdf -pvc research_paper.tex
+
+# Single compilation:
+latexmk -pdf research_paper.tex
+```
+
+## Usage
+
+### Editing the Paper with Claude Code
+
+1. Start Claude Code in the project directory:
+   ```bash
+   cd rc-paper
+   claude
+   ```
+
+2. Request edits in natural language:
+   ```
+   "Add a paragraph about Android sandboxing in section 2"
+   "Create a comparison table for security mechanisms"
+   "Fix the citation format for reference [5]"
+   "Translate this section to Romanian"
+   ```
+
+3. Claude Code edits `research_paper.tex` directly
+4. VSCode detects changes and auto-compiles to PDF
+5. Review generated `research_paper.pdf`
+
+### Adding Citations
+
+1. Add BibTeX entries to `references.bib`:
+
+```bibtex
+@article{key2024,
+  author  = {Author Name},
+  title   = {Article Title},
+  journal = {Journal Name},
+  year    = {2024},
+  volume  = {10},
+  pages   = {1--20}
+}
+```
+
+2. Cite in document:
+
+```latex
+According to recent research \cite{key2024}, ...
+```
+
+### Adding Figures
+
+```latex
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.9\columnwidth]{image.png}
+    \caption{Description}
+    \label{fig:label}
+\end{figure}
+```
+
+### Adding Tables
+
+```latex
+\begin{table}[htbp]
+    \centering
+    \caption{Table Title}
+    \begin{tabular}{lcc}
+        \toprule
+        Column 1 & Column 2 & Column 3 \\
+        \midrule
+        Data & Data & Data \\
+        \bottomrule
+    \end{tabular}
+    \label{tab:label}
+\end{table}
+```
+
+## Paper Content
+
+### Key Sections
+1. **Abstract** - Research summary and contributions
+2. **Introduction** - Android platform overview and motivation
+3. **Security Architecture** - Multi-layered protection mechanisms
+4. **Vulnerability Analysis** - Common attack vectors and case studies
+5. **Comparative Analysis** - Security mechanism effectiveness
+6. **Case Study** - QuadRooter vulnerability analysis
+7. **Conclusions** - Findings and future directions
+
+### Research Focus Areas
+- Android platform architecture
+- Permission system and sandboxing
+- SELinux implementation
+- Application signing mechanisms
+- Known vulnerabilities (QuadRooter, etc.)
+- Security evolution across Android versions
+
+## Troubleshooting
+
+### Bibliography Not Appearing
+
+```bash
+# Ensure biber runs successfully:
+biber research_paper
+# Check for errors in research_paper.blg
+```
+
+### Missing Package Errors
+
+MiKTeX should auto-install. If not:
+```bash
+# Open MiKTeX Console
+# Settings → Install missing packages: Yes
+```
+
+### Romanian Characters Not Displaying
+
+Ensure UTF-8 encoding:
+```latex
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[romanian]{babel}
+```
+
+### PDF Not Updating
+
+1. Close PDF viewer
+2. Delete auxiliary files: `*.aux *.bbl *.bcf *.log`
+3. Recompile
+
+## Cleaning Build Files
+
+```bash
+# Windows:
+del *.aux *.log *.bbl *.blg *.bcf *.run.xml *.out *.toc *.fdb_latexmk *.fls *.synctex.gz
+
+# Linux/macOS:
+rm -f *.aux *.log *.bbl *.blg *.bcf *.run.xml *.out *.toc *.fdb_latexmk *.fls *.synctex.gz
+```
+
+## Contributing
+
+1. Create a new branch for changes
+2. Edit LaTeX source files
+3. Test compilation
+4. Submit pull request with compiled PDF
 
 ## License
 
-Free to use for your research!
+Academic research paper - All rights reserved by authors.
 
-Good luck with your research paper! 📄
+## Contact
+
+For questions regarding this research:
+- Budiul Cristian-Carol
+- Titianu Maria
+
+Master's Program - Computer Networks (RC)
